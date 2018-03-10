@@ -1,0 +1,10 @@
+version: "Apple Swift version 4.0.3 (swiftlang-900.0.74.1 clang-900.0.39.2)"
+options: "1809565e6248171651baeb5d361e3ba7"
+build_time: [1520669718, 594181000]
+inputs:
+  "/Users/mikehaydan/Desktop/Projects/Weather Logger/Weather Logger/AppDelegate.swift": [1520669714, 0]
+  "/Users/mikehaydan/Desktop/Projects/Weather Logger/Weather Logger/MasterViewController.swift": [1520669714, 0]
+  "/Users/mikehaydan/Desktop/Projects/Weather Logger/Weather Logger/DetailViewController.swift": [1520669714, 0]
+  "/Users/mikehaydan/Desktop/Projects/Weather Logger/DerivedData/Weather Logger/Build/Intermediates.noindex/Weather Logger.build/Debug-iphonesimulator/Weather Logger.build/DerivedSources/CoreDataGenerated/Weather_Logger/Event+CoreDataClass.swift": [1520669718, 0]
+  "/Users/mikehaydan/Desktop/Projects/Weather Logger/DerivedData/Weather Logger/Build/Intermediates.noindex/Weather Logger.build/Debug-iphonesimulator/Weather Logger.build/DerivedSources/CoreDataGenerated/Weather_Logger/Event+CoreDataProperties.swift": [1520669718, 0]
+  "/Users/mikehaydan/Desktop/Projects/Weather Logger/DerivedData/Weather Logger/Build/Intermediates.noindex/Weather Logger.build/Debug-iphonesimulator/Weather Logger.build/DerivedSources/CoreDataGenerated/Weather_Logger/Weather_Logger+CoreDataModel.swift": [1520669718, 0]
