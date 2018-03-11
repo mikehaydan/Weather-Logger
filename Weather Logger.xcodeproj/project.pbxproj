@@ -25,6 +25,13 @@
 		E869C9B720548BE900046B25 /* WeatherDataRequestProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = E869C9B620548BE900046B25 /* WeatherDataRequestProtocol.swift */; };
 		E869C9B920548D7D00046B25 /* WeatherDataRequestImplementation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E869C9B820548D7D00046B25 /* WeatherDataRequestImplementation.swift */; };
 		E869C9BB20548E4500046B25 /* URLs.swift in Sources */ = {isa = PBXBuildFile; fileRef = E869C9BA20548E4500046B25 /* URLs.swift */; };
+		E869C9BF2055935000046B25 /* WeatherListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E869C9BE2055935000046B25 /* WeatherListViewController.swift */; };
+		E869C9C12055936100046B25 /* WeatherListPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E869C9C02055936100046B25 /* WeatherListPresenter.swift */; };
+		E869C9C72055940900046B25 /* WeatherListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E869C9C62055940900046B25 /* WeatherListTableViewCell.swift */; };
+		E869C9CA205595E200046B25 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E869C9C9205595E200046B25 /* CoreLocation.framework */; };
+		E869C9CD205596CB00046B25 /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E869C9CC205596CB00046B25 /* LocationService.swift */; };
+		E869C9CF2055A78700046B25 /* WeatherListCellPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E869C9CE2055A78700046B25 /* WeatherListCellPresenter.swift */; };
+		E869C9D22055A97600046B25 /* UIViewController + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E869C9D12055A97600046B25 /* UIViewController + Extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -68,6 +75,13 @@
 		E869C9B620548BE900046B25 /* WeatherDataRequestProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherDataRequestProtocol.swift; sourceTree = "<group>"; };
 		E869C9B820548D7D00046B25 /* WeatherDataRequestImplementation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherDataRequestImplementation.swift; sourceTree = "<group>"; };
 		E869C9BA20548E4500046B25 /* URLs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLs.swift; sourceTree = "<group>"; };
+		E869C9BE2055935000046B25 /* WeatherListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherListViewController.swift; sourceTree = "<group>"; };
+		E869C9C02055936100046B25 /* WeatherListPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherListPresenter.swift; sourceTree = "<group>"; };
+		E869C9C62055940900046B25 /* WeatherListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherListTableViewCell.swift; sourceTree = "<group>"; };
+		E869C9C9205595E200046B25 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		E869C9CC205596CB00046B25 /* LocationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
+		E869C9CE2055A78700046B25 /* WeatherListCellPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherListCellPresenter.swift; sourceTree = "<group>"; };
+		E869C9D12055A97600046B25 /* UIViewController + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController + Extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,6 +89,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E869C9CA205595E200046B25 /* CoreLocation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -102,6 +117,7 @@
 				E869C95C2053CB9200046B25 /* Weather LoggerTests */,
 				E869C9672053CB9200046B25 /* Weather LoggerUITests */,
 				E869C9412053CB9200046B25 /* Products */,
+				E869C9C8205595E100046B25 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -118,11 +134,12 @@
 		E869C9422053CB9200046B25 /* Weather Logger */ = {
 			isa = PBXGroup;
 			children = (
+				E869C9972053D83F00046B25 /* Scenes */,
+				E869C9CB205596A600046B25 /* Services */,
 				E869C9982053D84000046B25 /* API */,
 				E869C99A2053D84000046B25 /* CoreData */,
-				E869C9992053D84000046B25 /* Models */,
+				E869C9D02055A95500046B25 /* Extension */,
 				E869C9912053D83F00046B25 /* Resources */,
-				E869C9972053D83F00046B25 /* Scenes */,
 				E869C98C2053D83F00046B25 /* Supporting Files */,
 			);
 			path = "Weather Logger";
@@ -170,6 +187,7 @@
 		E869C9972053D83F00046B25 /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
+				E869C9BD2055933000046B25 /* WeatherList */,
 			);
 			path = Scenes;
 			sourceTree = "<group>";
@@ -183,13 +201,6 @@
 				E869C9A32053D9FE00046B25 /* Requests */,
 			);
 			path = API;
-			sourceTree = "<group>";
-		};
-		E869C9992053D84000046B25 /* Models */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Models;
 			sourceTree = "<group>";
 		};
 		E869C99A2053D84000046B25 /* CoreData */ = {
@@ -234,6 +245,49 @@
 				E869C9BA20548E4500046B25 /* URLs.swift */,
 			);
 			path = "API Core";
+			sourceTree = "<group>";
+		};
+		E869C9BD2055933000046B25 /* WeatherList */ = {
+			isa = PBXGroup;
+			children = (
+				E869C9C3205593DD00046B25 /* Cells */,
+				E869C9BE2055935000046B25 /* WeatherListViewController.swift */,
+				E869C9C02055936100046B25 /* WeatherListPresenter.swift */,
+			);
+			path = WeatherList;
+			sourceTree = "<group>";
+		};
+		E869C9C3205593DD00046B25 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				E869C9C62055940900046B25 /* WeatherListTableViewCell.swift */,
+				E869C9CE2055A78700046B25 /* WeatherListCellPresenter.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		E869C9C8205595E100046B25 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				E869C9C9205595E200046B25 /* CoreLocation.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		E869C9CB205596A600046B25 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				E869C9CC205596CB00046B25 /* LocationService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		E869C9D02055A95500046B25 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				E869C9D12055A97600046B25 /* UIViewController + Extension.swift */,
+			);
+			path = Extension;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -377,12 +431,18 @@
 				E869C9B920548D7D00046B25 /* WeatherDataRequestImplementation.swift in Sources */,
 				E869C9B52053E2CA00046B25 /* CoreDataStack.swift in Sources */,
 				E869C99B2053D84000046B25 /* AppDelegate.swift in Sources */,
+				E869C9BF2055935000046B25 /* WeatherListViewController.swift in Sources */,
+				E869C9CF2055A78700046B25 /* WeatherListCellPresenter.swift in Sources */,
 				E869C97F2053D7B200046B25 /* SplitViewController.swift in Sources */,
 				E869C9BB20548E4500046B25 /* URLs.swift in Sources */,
+				E869C9D22055A97600046B25 /* UIViewController + Extension.swift in Sources */,
+				E869C9C12055936100046B25 /* WeatherListPresenter.swift in Sources */,
+				E869C9CD205596CB00046B25 /* LocationService.swift in Sources */,
 				E869C99D2053D84000046B25 /* Weather_Logger.xcdatamodeld in Sources */,
 				E869C9AF2053D9FF00046B25 /* WeatherApiModel.swift in Sources */,
 				E869C9B720548BE900046B25 /* WeatherDataRequestProtocol.swift in Sources */,
 				E869C9B12053D9FF00046B25 /* ApiResponse.swift in Sources */,
+				E869C9C72055940900046B25 /* WeatherListTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -551,6 +611,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = E3G5K9X7S4;
 				INFOPLIST_FILE = "Weather Logger/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Mike.Weather-Logger";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -566,6 +627,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = E3G5K9X7S4;
 				INFOPLIST_FILE = "Weather Logger/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Mike.Weather-Logger";
 				PRODUCT_NAME = "$(TARGET_NAME)";

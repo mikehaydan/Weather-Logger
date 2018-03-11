@@ -13,7 +13,7 @@ struct URLs {
     
     static let baseUrl = "api.openweathermap.org/data/2.5/weather?APPID=\(APiKey)"
     
-    static func getWeatherBy(latitude: Float, longitude: Float) -> String {
+    static func getWeatherBy(latitude: Double, longitude: Double) -> String {
         return "\(URLs.baseUrl)&lat=\(latitude)&lon=\(longitude)"
     }
 }

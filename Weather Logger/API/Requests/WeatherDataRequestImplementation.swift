@@ -8,9 +8,14 @@
 
 import Foundation
 
+//MARK: - GetWeatherByCoordsRequest
+
 class GetWeatherByCoordsRequest: ApiRequest {
-    private var latitude: Float = 0
-    private var longitude: Float = 0
+    
+    //MARK: - Properties
+    
+    private var latitude: Double = 0
+    private var longitude: Double = 0
     
     var urlRequest: URLRequest {
         let urlString = URLs.getWeatherBy(latitude: latitude, longitude: longitude)
@@ -21,17 +26,42 @@ class GetWeatherByCoordsRequest: ApiRequest {
         return request
     }
     
-    func configure(latitude: Float, longitude: Float) {
+    //MARK: - Public
+    
+    func configure(latitude: Double, longitude: Double) {
         self.latitude = latitude
         self.longitude = longitude
     }
-    
 }
 
+//MARK: - WeatherDataRequestImplementation
 
 class WeatherDataRequestImplementation: WeatherDataRequest {
     
-    func fetchWeatherFor(latitude: Float, andLongitude longitude: Float, completion: @escaping WeatherDataCompletion) {
+    //MARK: - Properties
+
+    let apiClient: ApiClient
+    
+    //MARK: - LifeCycle
+    
+    init(apiClient: ApiClient) {
+        self.apiClient = apiClient
+    }
+    
+    //MARK: - Public
+    
+    func fetchWeatherFor(latitude: Double, andLongitude longitude: Double, completion: @escaping WeatherDataCompletion) {
+        let request = GetWeatherByCoordsRequest()
+        request.configure(latitude: latitude, longitude: longitude)
+        apiClient.execute(request: request) { (result: Result<ApiResponse<WeatherApiModel>>) in
+            switch result {
+            case let .success(response):
+                let model = response.model
+                completion(.success(model))
+            case let .failure(error):
+                completion(.failure(error))
+            }
+        }
         
     }
 }
