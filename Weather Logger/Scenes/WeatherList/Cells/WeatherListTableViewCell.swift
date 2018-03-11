@@ -8,15 +8,19 @@
 
 import UIKit
 
-class WeatherListTableViewCell: UITableViewCell {
-
+class WeatherListTableViewCell: UITableViewCell, WeatherListCellView {
+    
     //MARK: - Properties
     
-    
+    var presenter: WeatherListCellPresenter!
     
     //MARK: - LifeCycle
     
-    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        
+        presenter = WeatherListCellPresenterImplementation(view: self)
+    }
     
     //MARK: - IBActions
     
@@ -27,5 +31,12 @@ class WeatherListTableViewCell: UITableViewCell {
     
     
     //MARK: - Public
+    
+    func set(temperature: String, andDate date: String) {
+        
+    }
 
+    func set(detailsButtonText: String) {
+        
+    }
 }
