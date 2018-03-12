@@ -12,6 +12,12 @@ class WeatherListTableViewCell: UITableViewCell, WeatherListCellView {
     
     //MARK: - Properties
     
+    @IBOutlet private weak var temperatureLabel: UILabel!
+    
+    @IBOutlet private weak var dateLabel: UILabel!
+    
+    @IBOutlet private weak var detailsButton: UIButton!
+    
     var presenter: WeatherListCellPresenter!
     
     //MARK: - LifeCycle
@@ -25,6 +31,9 @@ class WeatherListTableViewCell: UITableViewCell, WeatherListCellView {
     //MARK: - IBActions
     
     
+    @IBAction func detaulsButtonTapped(_ sender: Any) {
+        presenter.detailsButtonTapped()
+    }
     
     //MARK: - Private
     
@@ -33,10 +42,11 @@ class WeatherListTableViewCell: UITableViewCell, WeatherListCellView {
     //MARK: - Public
     
     func set(temperature: String, andDate date: String) {
-        
+        temperatureLabel.text = temperature
+        dateLabel.text = date
     }
 
     func set(detailsButtonText: String) {
-        
+        detailsButton.setTitle(detailsButtonText, for: .normal)
     }
 }

@@ -51,7 +51,7 @@ class LocationServiceImplementation: NSObject, LocationService {
         locationManager.requestAlwaysAuthorization()
         if isLocationEnabled {
             locationManager.delegate = self
-            locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+            locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
             locationManager.startUpdatingLocation()
             return true
         } else {
@@ -65,16 +65,13 @@ class LocationServiceImplementation: NSObject, LocationService {
 extension LocationServiceImplementation: CLLocationManagerDelegate {
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        guard let location = manager.location?.coordinate else {
-            return
+        if let location = manager.location?.coordinate {
+            let longitudeDelta = fabs(location.longitude - lastCoods.longitude)
+            let latitudeDelta = fabs(location.latitude - lastCoods.latitude)
+            if max(longitudeDelta, latitudeDelta) > LocationServiceConstants.coordsDeltaValue {
+                lastCoods = location
+                delegate?.updateLocationWith(longitude: location.longitude, latitude: location.latitude)
+            }
         }
-        
-        let longitudeDelta = fabs(location.longitude - lastCoods.latitude)
-        let latitudeDelta = fabs(location.latitude - lastCoods.latitude)
-        if max(longitudeDelta, latitudeDelta) > LocationServiceConstants.coordsDeltaValue {
-            lastCoods = location
-            delegate?.updateLocationWith(longitude: location.longitude, latitude: location.latitude)
-        }
-        
     }
 }

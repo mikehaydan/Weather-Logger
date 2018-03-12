@@ -53,6 +53,11 @@ class WeatherListCellPresenterImplementation: WeatherListCellPresenter {
     func configureWith(model: WeatherApiModel, delegate: WeatherListCellDelegate?, atIndex index: Int) {
         self.index = index
         self.delegate = delegate
+        let dateFormater = DateFormatter()
+        dateFormater.dateStyle = .short
+        dateFormater.timeStyle = .medium
+        let stringDate = dateFormater.string(from: Date())
+        view.set(temperature: "\(model.main.temp) °C", andDate: stringDate)
     }
     
     func detailsButtonTapped() {

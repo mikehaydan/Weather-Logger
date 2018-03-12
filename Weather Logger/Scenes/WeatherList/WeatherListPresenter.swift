@@ -10,6 +10,7 @@ import Foundation
 
 private struct WeatherListPresenterConstants {
     static let weatherListTableViewCellIdentifier = "WeatherListTableViewCell"
+    static let weatherListTableViewCellHeight: Float = 75.0
 }
 
 protocol WeatherListView: class {
@@ -18,14 +19,17 @@ protocol WeatherListView: class {
     func reloadView()
     func showProgres()
     func hideProgres()
+    func showDetailsViewWith(model: WeatherApiModel, forView view: WeatherDetailsView)
 }
 
 protocol WeatherListPresenter {
     var dataSourceCount: Int { get }
+    var cellHeight: Float { get }
     var weatherCellIndetifier: String { get }
     init(view: WeatherListView)
     func prepareLocation()
     func configure(view: WeatherListCellView, atIndex index: Int)
+    func configure(view: WeatherDetailsView, withModel model: WeatherApiModel)
 }
 
 //MARK: - WeatherListPresenterImplementation
@@ -33,6 +37,8 @@ protocol WeatherListPresenter {
 class WeatherListPresenterImplementation: WeatherListPresenter {
     
     //MARK: - Properties
+    
+    weak var delegate: WeatherDetailsViewDelegate!
     
     private var dataSource: [WeatherApiModel] = []
     
@@ -49,6 +55,11 @@ class WeatherListPresenterImplementation: WeatherListPresenter {
     
     var dataSourceCount: Int {
         return dataSource.count
+    }
+    
+    var cellHeight: Float {
+        return WeatherListPresenterConstants.weatherListTableViewCellHeight
+        
     }
     
     var weatherCellIndetifier: String {
@@ -90,14 +101,34 @@ class WeatherListPresenterImplementation: WeatherListPresenter {
     }
     
     func configure(view: WeatherListCellView, atIndex index: Int) {
-        
+        let model = dataSource[index]
+        view.presenter.configureWith(model: model, delegate: self, atIndex: index)
+    }
+    
+    func configure(view: WeatherDetailsView, forModelAt index: Int) {
+        let model = dataSource[index]
+        let presenter = WeatherDetailsPresenterImplementation(view: view, model: model)
+        view.presenter = presenter
+    }
+    
+    func configure(view: WeatherDetailsView, withModel model: WeatherApiModel) {
+        view.presenter.set(model: model)
     }
 }
 
 //MARK: - LocationServiceDelegate
 
 extension WeatherListPresenterImplementation: LocationServiceDelegate {
+    
     func updateLocationWith(longitude: Double, latitude: Double) {
         getWeatherFor(longitude: longitude, latitude: latitude)
+    }
+}
+
+extension WeatherListPresenterImplementation: WeatherListCellDelegate {
+    
+    func detailsButtonTappedAt(index: Int) {
+        let model = dataSource[index]
+        view.showDetailsViewWith(model: model, forView: delegate!.preseterView)
     }
 }

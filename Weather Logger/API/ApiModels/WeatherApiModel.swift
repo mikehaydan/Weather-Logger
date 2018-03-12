@@ -13,7 +13,7 @@ struct WeatherApiModel: InitializableWithData, InitializableWithJson, Codable {
     let name: String
     let dt: Int
     let base: String
-    let visibility: Double
+    let visibility: Double?
     let coord: Cords
     let weather: [Weather]
     let main: Main

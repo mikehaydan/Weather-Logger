@@ -12,10 +12,14 @@ import CoreData
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDelegate {
 
+    //MARK: - Properties
+    
     var window: UIWindow?
 
+    //MARK: - AppDelegate
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+        prepareSplitController()
         
         return true
     }
@@ -23,12 +27,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
     func applicationWillTerminate(_ application: UIApplication) {
         CoreDataStackImpementation.shared.saveContext()
     }
-    
-    // MARK: - Core Data stack
 
-    
+    //MARK: - Private
 
-    // MARK: - Core Data Saving support
+    private func prepareSplitController() {
+        guard let splitViewController = window?.rootViewController as? SplitViewController,
+            let masterNavController = splitViewController.viewControllers.first as? UINavigationController,
+            let masterViewController = masterNavController.topViewController as? WeatherListViewController,
+            let detailsNavController = splitViewController.viewControllers.last as? UINavigationController,
+            let detailsViewController = detailsNavController.topViewController as? WeatherDetailsViewController else {
+                fatalError()
+        }
+      
+        let weatherListPresenter = WeatherListPresenterImplementation(view: masterViewController)
+        masterViewController.presenter = weatherListPresenter
+        let weatherDetailsPresenter = WeatherDetailsPresenterImplementation(view: detailsViewController, model: nil)
+        detailsViewController.presenter = weatherDetailsPresenter
+        detailsViewController.navigationItem.leftItemsSupplementBackButton = true
+        detailsViewController.navigationItem.leftBarButtonItem = splitViewController.displayModeButtonItem
+        
+        weatherListPresenter.delegate = weatherDetailsPresenter
+    }
 
 }
 

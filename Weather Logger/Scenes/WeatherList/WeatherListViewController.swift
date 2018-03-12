@@ -12,14 +12,18 @@ class WeatherListViewController: UIViewController {
 
     //MARK: - Properties
     
-    private var presenter: WeatherListPresenter!
+    @IBOutlet private weak var tableView: UITableView!
+    
+    @IBOutlet private weak var activityIndicator: UIActivityIndicatorView!
+    
+    var presenter: WeatherListPresenter!
     
     //MARK: - LifeCycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        presenter = WeatherListPresenterImplementation(view: self)
+        presenter.prepareLocation()
     }
     
     //MARK: - IBActions
@@ -31,7 +35,32 @@ class WeatherListViewController: UIViewController {
     
     
     //MARK: - Public
+}
 
+
+//MARK: - UITableViewDataSource
+
+extension WeatherListViewController: UITableViewDataSource {
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return presenter.dataSourceCount
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: presenter.weatherCellIndetifier, for: indexPath) as! WeatherListTableViewCell
+        presenter.configure(view: cell, atIndex: indexPath.row)
+        
+        return cell
+    }
+}
+
+//MARK: - UITableViewDelegate
+
+extension WeatherListViewController: UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return CGFloat(presenter.cellHeight)
+    }
 }
 
 //MARK: - WeatherListView
@@ -49,14 +78,23 @@ extension WeatherListViewController: WeatherListView {
     }
     
     func reloadView() {
-        
+        tableView.reloadData()
     }
     
     func showProgres() {
-        
+        activityIndicator.startAnimating()
     }
     
     func hideProgres() {
+        activityIndicator.stopAnimating()
+    }
+    
+    func showDetailsViewWith(model: WeatherApiModel, forView view: WeatherDetailsView) {
+        let detailsViewController = view as! WeatherDetailsViewController
+        let navigationController = detailsViewController.navigationController!
         
+        presenter.configure(view: detailsViewController, withModel: model)
+        
+        splitViewController!.showDetailViewController(navigationController, sender: nil)
     }
 }
