@@ -8,7 +8,7 @@
 
 import UIKit
 
-class WeatherInfoTableViewCell: UITableViewCell {
+class WeatherInfoTableViewCell: BaseWeatherDetailsTableViewCell {
 
     //MARK: - Properties
     
@@ -16,15 +16,13 @@ class WeatherInfoTableViewCell: UITableViewCell {
     
     @IBOutlet private weak var weatherDescriptionLabel: UILabel!
     
-}
+    //MARK: - Public
 
-//MARK: - WeatherDetailsTableViewCell
-
-extension WeatherInfoTableViewCell: WeatherDetailsCellView {
-    
-    func set(model: WeatherDetailsCellModel) {
+    override func set(model: WeatherDetailsCellModel) {
+        super.set(model: model)
+        
         let model = model.model as! Weather
         weatherIconImageView.image = UIImage(named: model.icon)
-        weatherDescriptionLabel.text = model.description
+        weatherDescriptionLabel.text = model.descriptionText
     }
 }

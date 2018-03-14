@@ -14,10 +14,14 @@ protocol WeatherDetailsCellModel {
     init(model: Any, cellIdentifier: String)
 }
 
-protocol WeatherDetailsCellView where Self: UITableViewCell {
+protocol WeatherDetailsCellView {
     func set(model: WeatherDetailsCellModel)
 }
 
+protocol WeatherDetailsCellPresenter where M: WeatherDetailsCellModel {
+    associatedtype M
+    func set(model: M)
+}
 
 struct WeatherWeatherDetailsCellModelImplementation: WeatherDetailsCellModel {
     var cellIdentifier: String
@@ -27,5 +31,14 @@ struct WeatherWeatherDetailsCellModelImplementation: WeatherDetailsCellModel {
     init(model: Any, cellIdentifier: String) {
         self.model = model
         self.cellIdentifier = cellIdentifier
+    }
+}
+
+
+//MARK: - BaseWeatherDetailsTableViewCell
+
+class BaseWeatherDetailsTableViewCell: UITableViewCell, WeatherDetailsCellView {
+    func set(model: WeatherDetailsCellModel) {
+        
     }
 }

@@ -8,11 +8,11 @@
 
 import Foundation
 
-protocol InitializableWithData: Codable {
+protocol InitializableWithData {
     init(data: Data?) throws
 }
 
-protocol InitializableWithJson: Codable {
+protocol InitializableWithJson {
     init(json: [String: Any]) throws
 }
 

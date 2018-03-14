@@ -21,20 +21,23 @@ class WeatherDetailsViewController: UIViewController, WeatherDetailsView {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        presenter.prepapreDataSource()
     }
     
     //MARK: - IBActions
     
-    
-    
-    //MARK: - Private
-    
-    
+    @IBAction private func saveButtonTapped(_ sender: Any) {
+        
+    }
     
     //MARK: - Public
     
     func reloadDetails() {
         tableView.reloadData()
+    }
+    
+    func set(title: String?) {
+        navigationItem.title = title
     }
 
 }
@@ -49,7 +52,8 @@ extension WeatherDetailsViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let identifier = presenter.getCellIdentifierAt(index: indexPath.row)
-        let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as! BaseWeatherDetailsTableViewCell
+        presenter.configure(view: cell, atIndex: indexPath.row)
         
         return cell
     }

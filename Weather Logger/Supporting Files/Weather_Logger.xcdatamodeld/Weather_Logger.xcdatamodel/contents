@@ -1,9 +1,57 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1" systemVersion="11A491" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
-    <entity name="Event" representedClassName="Event" codeGenerationType="class">
-        <attribute name="timestamp" optional="YES" attributeType="Date"/>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="13772" systemVersion="16G1212" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="CordsLocal" representedClassName="CordsLocal" syncable="YES">
+        <attribute name="latitude" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="longitude" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
+        <relationship name="weatherLocalModel" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="WeatherLocalModel" inverseName="coord" inverseEntity="WeatherLocalModel" syncable="YES"/>
+    </entity>
+    <entity name="MainLocal" representedClassName="MainLocal" syncable="YES">
+        <attribute name="humidity" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="pressure" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="temp" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="tempMax" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="tempMin" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
+        <relationship name="weatherLocalModel" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="WeatherLocalModel" inverseName="main" inverseEntity="WeatherLocalModel" syncable="YES"/>
+    </entity>
+    <entity name="SysLocal" representedClassName="SysLocal" syncable="YES">
+        <attribute name="country" attributeType="String" defaultValueString="empty" syncable="YES"/>
+        <attribute name="id" optional="YES" attributeType="Integer 64" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="message" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="sunrise" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="sunset" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="weatherLocalModel" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="WeatherLocalModel" inverseName="sys" inverseEntity="WeatherLocalModel" syncable="YES"/>
+    </entity>
+    <entity name="WeatherLocal" representedClassName="WeatherLocal" syncable="YES">
+        <attribute name="descriptionText" attributeType="String" defaultValueString="empty" syncable="YES"/>
+        <attribute name="icon" attributeType="String" defaultValueString="empty" syncable="YES"/>
+        <attribute name="id" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="main" attributeType="String" defaultValueString="empty" syncable="YES"/>
+        <relationship name="weatherLocalModel" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="WeatherLocalModel" inverseName="weather" inverseEntity="WeatherLocalModel" syncable="YES"/>
+    </entity>
+    <entity name="WeatherLocalModel" representedClassName="WeatherLocalModel" syncable="YES">
+        <attribute name="base" attributeType="String" defaultValueString="empty" syncable="YES"/>
+        <attribute name="dt" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="name" attributeType="String" defaultValueString="empty" syncable="YES"/>
+        <attribute name="visibility" optional="YES" attributeType="Double" usesScalarValueType="YES" syncable="YES"/>
+        <relationship name="coord" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="CordsLocal" inverseName="weatherLocalModel" inverseEntity="CordsLocal" syncable="YES"/>
+        <relationship name="main" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="MainLocal" inverseName="weatherLocalModel" inverseEntity="MainLocal" syncable="YES"/>
+        <relationship name="sys" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="SysLocal" inverseName="weatherLocalModel" inverseEntity="SysLocal" syncable="YES"/>
+        <relationship name="weather" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="WeatherLocal" inverseName="weatherLocalModel" inverseEntity="WeatherLocal" syncable="YES"/>
+        <relationship name="wind" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="WindLocal" inverseName="weatherLocalModel" inverseEntity="WindLocal" syncable="YES"/>
+    </entity>
+    <entity name="WindLocal" representedClassName="WindLocal" syncable="YES">
+        <attribute name="deg" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="speed" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
+        <relationship name="weatherLocalModel" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="WeatherLocalModel" inverseName="wind" inverseEntity="WeatherLocalModel" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Event" positionX="261" positionY="189" width="128" height="60"/>
+        <element name="WeatherLocalModel" positionX="261" positionY="198" width="128" height="195"/>
+        <element name="WindLocal" positionX="261" positionY="225" width="128" height="90"/>
+        <element name="SysLocal" positionX="279" positionY="207" width="128" height="150"/>
+        <element name="MainLocal" positionX="288" positionY="243" width="128" height="135"/>
+        <element name="CordsLocal" positionX="297" positionY="288" width="128" height="90"/>
+        <element name="WeatherLocal" positionX="315" positionY="279" width="128" height="120"/>
     </elements>
 </model>

@@ -57,8 +57,15 @@ struct Cords: Codable {
 struct Weather: Codable {
     let id: Int
     let main: String
-    let description: String
+    let descriptionText: String
     let icon: String
+    
+    enum CodingKeys: String, CodingKey {
+        case id
+        case main
+        case descriptionText = "description"
+        case icon
+    }
 }
 
 struct Main: Codable {
@@ -87,6 +94,26 @@ struct Sys: Codable {
     let type: Int?
     let message: Float
     let country: String
-    let sunrise: Int
-    let sunset: Int
+    var countryName: String? {
+        let locale = Locale.current as NSLocale
+        return locale.displayName(forKey: .countryCode, value: country)
+    }
+    let sunrise: TimeInterval
+    var sunriseDateString: String {
+        let date = Date(timeIntervalSince1970: sunrise)
+        let dateFormater = DateFormatter()
+        dateFormater.dateStyle = .short
+        dateFormater.timeStyle = .medium
+        let stringDate = dateFormater.string(from: date)
+        return stringDate
+    }
+    let sunset: TimeInterval
+    var sunsetDateString: String {
+        let date = Date(timeIntervalSince1970: sunset)
+        let dateFormater = DateFormatter()
+        dateFormater.dateStyle = .short
+        dateFormater.timeStyle = .medium
+        let stringDate = dateFormater.string(from: date)
+        return stringDate
+    }
 }

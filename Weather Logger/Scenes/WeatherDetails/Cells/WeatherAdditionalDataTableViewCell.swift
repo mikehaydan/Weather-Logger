@@ -8,7 +8,7 @@
 
 import UIKit
 
-class WeatherAdditionalDataTableViewCell: UITableViewCell {
+class WeatherAdditionalDataTableViewCell: BaseWeatherDetailsTableViewCell {
     
     //MARK: - Properties
     
@@ -26,16 +26,13 @@ class WeatherAdditionalDataTableViewCell: UITableViewCell {
     
     //MARK: - Public
     
-}
-
-//MARK: - WeatherDetailsTableViewCell
-
-extension WeatherAdditionalDataTableViewCell: WeatherDetailsCellView {
-    
-    func set(model: WeatherDetailsCellModel) {
-        let model = model as! Sys
-        countryLabel.text = model.country
-        sunriseDataLabel.text = "\(model.sunrise)"
-        sunsetDataLabel.text = "\(model.sunset)"
+    override func set(model: WeatherDetailsCellModel) {
+        super.set(model: model)
+        
+        let model = model.model as! Sys
+        countryLabel.text = model.countryName
+        sunriseDataLabel.text = model.sunriseDateString
+        sunsetDataLabel.text = model.sunsetDateString
     }
+    
 }

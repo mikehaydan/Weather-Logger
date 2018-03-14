@@ -8,7 +8,7 @@
 
 import UIKit
 
-class WeatherMainInfoTableViewCell: UITableViewCell {
+class WeatherMainInfoTableViewCell: BaseWeatherDetailsTableViewCell {
 
     //MARK: - Properties
     
@@ -25,16 +25,14 @@ class WeatherMainInfoTableViewCell: UITableViewCell {
     
     
     //MARK: - Public
-
-}
-
-//MARK: - WeatherMainInfoTableViewCellModel
-
-extension WeatherMainInfoTableViewCell: WeatherDetailsCellView {
-    func set(model: WeatherDetailsCellModel) {
-        let model = model as! Main
-        temperatureDataLabel.text = "\(model.temp)"
+    
+   override func set(model: WeatherDetailsCellModel) {
+        super.set(model: model)
+    
+        let model = model.model as! Main
+        temperatureDataLabel.text = "\(model.temp)°C"
         humidityDataLabel.text = "\(model.humidity)"
         presureDataLabel.text = "\(model.pressure)"
     }
+
 }
