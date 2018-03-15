@@ -19,7 +19,7 @@
         <attribute name="message" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="sunrise" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="sunset" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="type" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <relationship name="weatherLocalModel" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="WeatherLocalModel" inverseName="sys" inverseEntity="WeatherLocalModel" syncable="YES"/>
     </entity>
     <entity name="WeatherLocal" representedClassName="WeatherLocal" syncable="YES">
@@ -47,11 +47,11 @@
         <relationship name="weatherLocalModel" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="WeatherLocalModel" inverseName="wind" inverseEntity="WeatherLocalModel" syncable="YES"/>
     </entity>
     <elements>
+        <element name="CordsLocal" positionX="297" positionY="288" width="128" height="90"/>
+        <element name="MainLocal" positionX="288" positionY="243" width="128" height="135"/>
+        <element name="SysLocal" positionX="279" positionY="207" width="128" height="150"/>
+        <element name="WeatherLocal" positionX="315" positionY="279" width="128" height="120"/>
         <element name="WeatherLocalModel" positionX="261" positionY="198" width="128" height="195"/>
         <element name="WindLocal" positionX="261" positionY="225" width="128" height="90"/>
-        <element name="SysLocal" positionX="279" positionY="207" width="128" height="150"/>
-        <element name="MainLocal" positionX="288" positionY="243" width="128" height="135"/>
-        <element name="CordsLocal" positionX="297" positionY="288" width="128" height="90"/>
-        <element name="WeatherLocal" positionX="315" positionY="279" width="128" height="120"/>
     </elements>
 </model>

@@ -42,11 +42,29 @@ struct WeatherApiModel: InitializableWithData, InitializableWithJson, Codable {
             throw NSError.parseError
         }
     }
+    
+    init(weatherModelParameters: WeatherModelParameters, cordsParameters: CordsParameters, weatherParameters: [WeatherParameters], mainParameters: MainParameters, windParameters: WindParameters, sysParameters: SysParameters) {
+        self.id = weatherModelParameters.id
+        self.name = weatherModelParameters.name
+        self.dt = weatherModelParameters.dt
+        self.base = weatherModelParameters.base
+        self.visibility = weatherModelParameters.visibility
+        self.coord = Cords(parameters: cordsParameters)
+        self.weather = weatherParameters.map({  Weather(parameters: $0) })
+        self.main = Main(parameters: mainParameters)
+        self.wind = Wind(parameters: windParameters)
+        self.sys = Sys(parameters: sysParameters)
+    }
 }
 
 struct Cords: Codable {
     let longitude: Double
     let latitude: Double
+    
+    init(parameters: CordsParameters) {
+        longitude = parameters.longitude
+        latitude = parameters.latitude
+    }
     
     enum CodingKeys: String, CodingKey {
         case longitude = "lon"
@@ -59,6 +77,13 @@ struct Weather: Codable {
     let main: String
     let descriptionText: String
     let icon: String
+    
+    init(parameters: WeatherParameters) {
+        id = parameters.id
+        main = parameters.main
+        descriptionText = parameters.descriptionText
+        icon = parameters.icon
+    }
     
     enum CodingKeys: String, CodingKey {
         case id
@@ -75,6 +100,14 @@ struct Main: Codable {
     let tempMin: Double
     let tempMax: Double
     
+    init(parameters: MainParameters) {
+        temp = parameters.temp
+        pressure = parameters.pressure
+        humidity = parameters.humidity
+        tempMin = parameters.tempMin
+        tempMax = parameters.tempMax
+    }
+    
     enum CodingKeys: String, CodingKey {
         case temp
         case pressure
@@ -87,6 +120,11 @@ struct Main: Codable {
 struct Wind: Codable {
     let speed: Float
     let deg: Float
+    
+    init(parameters: WindParameters) {
+        speed = parameters.speed
+        deg = parameters.deg
+    }
 }
 
 struct Sys: Codable {
@@ -115,5 +153,14 @@ struct Sys: Codable {
         dateFormater.timeStyle = .medium
         let stringDate = dateFormater.string(from: date)
         return stringDate
+    }
+    
+    init(parameters: SysParameters) {
+        id = parameters.id
+        type = parameters.type
+        message = parameters.message
+        country = parameters.country
+        sunrise = parameters.sunrise
+        sunset = parameters.sunset
     }
 }

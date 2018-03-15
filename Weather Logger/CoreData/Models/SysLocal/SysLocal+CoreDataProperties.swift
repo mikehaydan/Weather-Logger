@@ -2,7 +2,7 @@
 //  SysLocal+CoreDataProperties.swift
 //  Weather Logger
 //
-//  Created by Mike Haydan on 13/03/2018.
+//  Created by Mike Haydan on 15/03/2018.
 //  Copyright © 2018 Mike Haydan. All rights reserved.
 //
 //
@@ -17,12 +17,12 @@ extension SysLocal {
         return NSFetchRequest<SysLocal>(entityName: "SysLocal")
     }
 
-    @NSManaged public var id: Int64
-    @NSManaged public var type: String?
-    @NSManaged public var message: Float
     @NSManaged public var country: String?
+    @NSManaged public var id: Int64
+    @NSManaged public var message: Float
     @NSManaged public var sunrise: Double
     @NSManaged public var sunset: Double
+    @NSManaged public var type: Int32
     @NSManaged public var weatherLocalModel: WeatherLocalModel?
 
 }
