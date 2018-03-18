@@ -38,6 +38,7 @@ struct WeatherWeatherDetailsCellModelImplementation: WeatherDetailsCellModel {
 //MARK: - BaseWeatherDetailsTableViewCell
 
 class BaseWeatherDetailsTableViewCell: UITableViewCell, WeatherDetailsCellView {
+    
     func set(model: WeatherDetailsCellModel) {
         
     }

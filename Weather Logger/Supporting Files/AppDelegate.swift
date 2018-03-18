@@ -34,17 +34,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
         guard let splitViewController = window?.rootViewController as? SplitViewController,
             let masterNavController = splitViewController.viewControllers.first as? UINavigationController,
             let masterViewController = masterNavController.topViewController as? WeatherListViewController,
-            let detailsNavController = splitViewController.viewControllers.last as? UINavigationController,
-            let detailsViewController = detailsNavController.topViewController as? WeatherDetailsViewController else {
+            let detailsController = splitViewController.viewControllers.last as? WeatherDetailsViewController else {
                 fatalError()
         }
       
         let weatherListPresenter = WeatherListPresenterImplementation(view: masterViewController)
         masterViewController.presenter = weatherListPresenter
-        let weatherDetailsPresenter = WeatherDetailsPresenterImplementation(view: detailsViewController, model: nil)
-        detailsViewController.presenter = weatherDetailsPresenter
-        detailsViewController.navigationItem.leftItemsSupplementBackButton = true
-        detailsViewController.navigationItem.leftBarButtonItem = splitViewController.displayModeButtonItem
+        let weatherDetailsPresenter = WeatherDetailsPresenterImplementation(view: detailsController, model: nil)
+        detailsController.presenter = weatherDetailsPresenter
+//        detailsViewController.navigationItem.leftItemsSupplementBackButton = true
+//        detailsViewController.navigationItem.leftBarButtonItem = splitViewController.displayModeButtonItem
         
         weatherListPresenter.delegate = weatherDetailsPresenter
     }

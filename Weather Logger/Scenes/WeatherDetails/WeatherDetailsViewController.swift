@@ -12,14 +12,16 @@ class WeatherDetailsViewController: UIViewController, WeatherDetailsView {
 
     //MARK: - Properties
     
-    @IBOutlet private weak var tableView: UITableView!
+    @IBOutlet private weak var tableView: UITableView?
+    
+    @IBOutlet private weak var saveButton: UIButton!
     
     var presenter: WeatherDetailsPresenter!
     
     //MARK: - LifeCycle
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+    override func viewDidLoad() {
+        super.viewDidLoad()
         
         presenter.prepapreDataSource()
     }
@@ -33,7 +35,7 @@ class WeatherDetailsViewController: UIViewController, WeatherDetailsView {
     //MARK: - Public
     
     func reloadDetails() {
-        tableView.reloadData()
+        tableView?.reloadData()
     }
     
     func set(title: String?) {
@@ -42,6 +44,10 @@ class WeatherDetailsViewController: UIViewController, WeatherDetailsView {
     
     func show(message: String) {
         alert(message: message)
+    }
+    
+    func save(enabled: Bool) {
+        saveButton.isEnabled = enabled
     }
 }
 

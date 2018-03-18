@@ -90,12 +90,15 @@ extension WeatherListViewController: WeatherListView {
         activityIndicator.stopAnimating()
     }
     
+    func reloadViewAnimated() {
+        tableView.reloadSections(IndexSet(integer: 0), with: .automatic)
+    }
+    
     func showDetailsViewWith(model: WeatherApiModel, forView view: WeatherDetailsView) {
         let detailsViewController = view as! WeatherDetailsViewController
-        let navigationController = detailsViewController.navigationController!
         
         presenter.configure(view: detailsViewController, withModel: model)
         
-        splitViewController!.showDetailViewController(navigationController, sender: nil)
+        splitViewController!.showDetailViewController(detailsViewController, sender: nil)
     }
 }

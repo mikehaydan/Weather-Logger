@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct WeatherApiModel: InitializableWithData, InitializableWithJson, Codable {
+class WeatherApiModel: InitializableWithData, InitializableWithJson, Codable {
     let id: Int
     let name: String
     let dt: Int
@@ -19,13 +19,24 @@ struct WeatherApiModel: InitializableWithData, InitializableWithJson, Codable {
     let main: Main
     let wind: Wind
     let sys: Sys
+    var coreDataModel: WeatherLocalModel? = nil
     
-    init(data: Data?) throws {
+    required init(data: Data?) throws {
         if let data = data {
             let jsonDecoder = JSONDecoder()
             do {
                 let model = try jsonDecoder.decode(WeatherApiModel.self, from: data)
-                self = model
+                self.id = model.id
+                self.name = model.name
+                self.dt = model.dt
+                self.base = model.base
+                self.visibility = model.visibility
+                self.coord = model.coord
+                self.weather = model.weather
+                self.main = model.main
+                self.wind = model.wind
+                self.sys = model.sys
+                self.coreDataModel = model.coreDataModel
             } catch {
                 throw NSError.parseError
             }
@@ -34,7 +45,7 @@ struct WeatherApiModel: InitializableWithData, InitializableWithJson, Codable {
         }
     }
     
-    init(json: [String : Any]) throws {
+    convenience required init(json: [String : Any]) throws {
         do {
             let jsonData = try JSONSerialization.data(withJSONObject: json)
             try self.init(data: jsonData)
@@ -44,20 +55,33 @@ struct WeatherApiModel: InitializableWithData, InitializableWithJson, Codable {
     }
     
     init(weatherModelParameters: WeatherModelParameters, cordsParameters: CordsParameters, weatherParameters: [WeatherParameters], mainParameters: MainParameters, windParameters: WindParameters, sysParameters: SysParameters) {
-        self.id = weatherModelParameters.id
-        self.name = weatherModelParameters.name
-        self.dt = weatherModelParameters.dt
-        self.base = weatherModelParameters.base
-        self.visibility = weatherModelParameters.visibility
-        self.coord = Cords(parameters: cordsParameters)
-        self.weather = weatherParameters.map({  Weather(parameters: $0) })
-        self.main = Main(parameters: mainParameters)
-        self.wind = Wind(parameters: windParameters)
-        self.sys = Sys(parameters: sysParameters)
+        id = weatherModelParameters.id
+        name = weatherModelParameters.name
+        dt = weatherModelParameters.dt
+        base = weatherModelParameters.base
+        visibility = weatherModelParameters.visibility
+        coord = Cords(parameters: cordsParameters)
+        weather = weatherParameters.map({  Weather(parameters: $0) })
+        main = Main(parameters: mainParameters)
+        wind = Wind(parameters: windParameters)
+        sys = Sys(parameters: sysParameters)
+    }
+    
+    private enum CodingKeys: String, CodingKey {
+        case id
+        case name
+        case dt
+        case base
+        case visibility
+        case coord
+        case weather
+        case main
+        case wind
+        case sys
     }
 }
 
-struct Cords: Codable {
+class Cords: Codable {
     let longitude: Double
     let latitude: Double
     
@@ -72,7 +96,7 @@ struct Cords: Codable {
     }
 }
 
-struct Weather: Codable {
+class Weather: Codable {
     let id: Int
     let main: String
     let descriptionText: String
@@ -85,7 +109,7 @@ struct Weather: Codable {
         icon = parameters.icon
     }
     
-    enum CodingKeys: String, CodingKey {
+    private enum CodingKeys: String, CodingKey {
         case id
         case main
         case descriptionText = "description"
@@ -93,7 +117,7 @@ struct Weather: Codable {
     }
 }
 
-struct Main: Codable {
+class Main: Codable {
     let temp: Double
     let pressure: Double
     let humidity: Double
@@ -108,7 +132,7 @@ struct Main: Codable {
         tempMax = parameters.tempMax
     }
     
-    enum CodingKeys: String, CodingKey {
+    private enum CodingKeys: String, CodingKey {
         case temp
         case pressure
         case humidity
@@ -117,7 +141,7 @@ struct Main: Codable {
     }
 }
 
-struct Wind: Codable {
+class Wind: Codable {
     let speed: Float
     let deg: Float
     
@@ -127,7 +151,7 @@ struct Wind: Codable {
     }
 }
 
-struct Sys: Codable {
+class Sys: Codable {
     let id: Int?
     let type: Int?
     let message: Float

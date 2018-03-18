@@ -10,10 +10,13 @@ import Foundation
 
 protocol WeatherDetailsViewDelegate: class {
     var preseterView: WeatherDetailsView { get }
+    var presentedModel: WeatherApiModel? { get }
+    func deletePresentedModel()
 }
 
 protocol WeatherDetailsPresenter {
     var dataSourceCount: Int { get }
+    var savedAction: ((WeatherApiModel) -> ())? { set get }
     init(view: WeatherDetailsView, model: WeatherApiModel?)
     func set(model: WeatherApiModel?)
     func getCellIdentifierAt(index: Int) -> String
@@ -27,6 +30,7 @@ protocol WeatherDetailsView: class {
     func reloadDetails()
     func set(title: String?)
     func show(message: String)
+    func save(enabled: Bool)
 }
 
 class WeatherDetailsPresenterImplementation: WeatherDetailsPresenter {
@@ -35,7 +39,11 @@ class WeatherDetailsPresenterImplementation: WeatherDetailsPresenter {
     
     private unowned let view: WeatherDetailsView
     
-    private var model: WeatherApiModel?
+    private weak var model: WeatherApiModel? {
+        didSet {
+            prepapreDataSource()
+        }
+    }
     
     private var dataSource: [WeatherDetailsCellModel] = []
     
@@ -47,6 +55,8 @@ class WeatherDetailsPresenterImplementation: WeatherDetailsPresenter {
     var dataSourceCount: Int {
         return dataSource.count
     }
+    
+    var savedAction: ((WeatherApiModel) -> ())?
     
     //MARK: - LifeCycle
     
@@ -72,8 +82,11 @@ class WeatherDetailsPresenterImplementation: WeatherDetailsPresenter {
                     return
                 }
                 switch result {
-                case .success():
+                case let .success(coreDataModel):
+                    strongSelf.model?.coreDataModel = coreDataModel
                 strongSelf.view.show(message: "Success")
+                strongSelf.view.save(enabled: false)
+                strongSelf.savedAction?(model)
                 case let .failure(error):
                     strongSelf.view.show(message: error.localizedDescription)
                 }
@@ -92,9 +105,12 @@ class WeatherDetailsPresenterImplementation: WeatherDetailsPresenter {
             dataSource += [WeatherWeatherDetailsCellModelImplementation(model: sys, cellIdentifier: WeatherAdditionalDataTableViewCell.nibName),
                            WeatherWeatherDetailsCellModelImplementation(model: main, cellIdentifier: WeatherMainInfoTableViewCell.nibName)]
             title = model.name
+            let isSaveEnabled = model.coreDataModel == nil
+            view.save(enabled: isSaveEnabled)
         } else {
             dataSource = []
             title = nil
+            view.save(enabled: false)
         }
         view.reloadDetails()
         view.set(title: title)
@@ -120,5 +136,13 @@ extension WeatherDetailsPresenterImplementation: WeatherDetailsViewDelegate {
     
     var preseterView: WeatherDetailsView {
         return view
+    }
+    
+    var presentedModel: WeatherApiModel? {
+        return model
+    }
+    
+    func deletePresentedModel() {
+        model = nil
     }
 }

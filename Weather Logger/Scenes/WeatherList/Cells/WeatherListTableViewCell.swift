@@ -18,7 +18,15 @@ class WeatherListTableViewCell: UITableViewCell, WeatherListCellView {
     
     @IBOutlet private weak var detailsButton: UIButton!
     
+    @IBOutlet private weak var movingCentralConstraint: NSLayoutConstraint!
+    
+    private var panGesture: UIPanGestureRecognizer!
+    
     var presenter: WeatherListCellPresenter!
+    
+    var velocityInView: CGPoint {
+        return panGesture.velocity(in: contentView)
+    }
     
     //MARK: - LifeCycle
     
@@ -34,6 +42,22 @@ class WeatherListTableViewCell: UITableViewCell, WeatherListCellView {
         presenter.detailsButtonTapped()
     }
     
+    @IBAction private func deleteButtonTapped(_ sender: Any) {
+        presenter.deletButtonTapped()
+    }
+    
+    @IBAction private func swipeGestureAction(_ sender: UIPanGestureRecognizer) {
+        switch sender.state {
+        case .changed:
+            let point = sender.translation(in: contentView)
+            presenter.prepareDeleteButtonForChangedStateWith(point: point)
+        case .cancelled, .ended:
+            presenter.prepareDeleteButtonForFinishedState()
+        default:
+            break
+        }
+    }
+    
     //MARK: - Private
     
     
@@ -47,5 +71,34 @@ class WeatherListTableViewCell: UITableViewCell, WeatherListCellView {
 
     func set(detailsButtonText: String) {
         detailsButton.setTitle(detailsButtonText, for: .normal)
+    }
+    
+    func prepareGesture() {
+        panGesture = UIPanGestureRecognizer(target: self, action: #selector(swipeGestureAction(_:)))
+        panGesture!.delegate = self
+        contentView.addGestureRecognizer(panGesture!)
+    }
+    
+    func setDeleteButtonConstraintWith(value: CGFloat) {
+        movingCentralConstraint.constant = value
+    }
+    
+    func reloadViewAnimated() {
+        UIView.animate(withDuration: 0.3) { [weak self] in
+            self?.contentView.layoutIfNeeded()
+        }
+    }
+    
+    func setGesture(enabled: Bool) {
+        panGesture.isEnabled = enabled
+    }
+}
+
+//MARK: - UIGestureRecognizerDelegate
+
+extension WeatherListTableViewCell {
+    
+    override func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+        return presenter.swipeGesureShouldBegin
     }
 }

@@ -20,6 +20,7 @@ protocol WeatherListView: class {
     func showProgres()
     func hideProgres()
     func showDetailsViewWith(model: WeatherApiModel, forView view: WeatherDetailsView)
+    func reloadViewAnimated()
 }
 
 protocol WeatherListPresenter {
@@ -80,20 +81,6 @@ class WeatherListPresenterImplementation: WeatherListPresenter {
     
     //MARK: - Private
     
-    private func save(model: WeatherApiModel) {
-        coreDataSerivce.add(model: model) { [weak self] (result) in
-            guard let strongSelf = self else {
-                return
-            }
-            switch result {
-            case .success(): break
-                strongSelf.view.show(message: "Success")
-            case let .failure(error):
-                strongSelf.view.show(message: error.localizedDescription)
-            }
-        }
-    }
-    
     private func getWeatherFor(longitude: Double, latitude: Double) {
         view.showProgres()
         weatherRequest.fetchWeatherFor(latitude: latitude, andLongitude: longitude) { [weak self] (result) in
@@ -147,6 +134,9 @@ class WeatherListPresenterImplementation: WeatherListPresenter {
     
     func configure(view: WeatherDetailsView, withModel model: WeatherApiModel) {
         view.presenter.set(model: model)
+        view.presenter.savedAction = { [weak self] (savedModel) in
+            self?.view.reloadView()
+        }
     }
 }
 
@@ -161,13 +151,21 @@ extension WeatherListPresenterImplementation: LocationServiceDelegate {
 
 extension WeatherListPresenterImplementation: WeatherListCellDelegate {
     
+    func deleteButtonTappedAt(index: Int) {
+        let model = dataSource[index]
+        if coreDataSerivce.delete(model: model) {
+            dataSource.remove(at: index)
+            view.reloadViewAnimated()
+            if delegate.presentedModel === model {
+                delegate.deletePresentedModel()
+            }
+        } else {
+            view.show(message: "An error occurred, while delete object")
+        }
+    }
+    
     func detailsButtonTappedAt(index: Int) {
         let model = dataSource[index]
         view.showDetailsViewWith(model: model, forView: delegate!.preseterView)
-    }
-    
-    func saveButtonTappedAt(index: Int) {
-        let model = dataSource[index]
-        save(model: model)
     }
 }

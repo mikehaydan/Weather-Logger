@@ -51,7 +51,7 @@ class LocationServiceImplementation: NSObject, LocationService {
         locationManager.requestAlwaysAuthorization()
         if isLocationEnabled {
             locationManager.delegate = self
-            locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
+            locationManager.desiredAccuracy = kCLLocationAccuracyBest
             locationManager.startUpdatingLocation()
             return true
         } else {
