@@ -19,12 +19,14 @@ protocol WeatherDetailsPresenter {
     func getCellIdentifierAt(index: Int) -> String
     func prepapreDataSource()
     func configure(view: WeatherDetailsCellView, atIndex index: Int)
+    func saveData()
 }
 
 protocol WeatherDetailsView: class {
     var presenter: WeatherDetailsPresenter! { set get }
     func reloadDetails()
     func set(title: String?)
+    func show(message: String)
 }
 
 class WeatherDetailsPresenterImplementation: WeatherDetailsPresenter {
@@ -36,6 +38,11 @@ class WeatherDetailsPresenterImplementation: WeatherDetailsPresenter {
     private var model: WeatherApiModel?
     
     private var dataSource: [WeatherDetailsCellModel] = []
+    
+    private lazy var coreDataSerivce: CoreDataWeatherDataSerivce = {
+        let serivce = CoreDataWeatherDataSerivceImplementation(viewContext: CoreDataStackImpementation.shared.persistentContainer.viewContext)
+        return serivce
+    }()
     
     var dataSourceCount: Int {
         return dataSource.count
@@ -57,6 +64,22 @@ class WeatherDetailsPresenterImplementation: WeatherDetailsPresenter {
     
     
     //MARK: - Public
+    
+    func saveData() {
+        if let model = model {
+            coreDataSerivce.add(model: model) { [weak self] (result) in
+                guard let strongSelf = self else {
+                    return
+                }
+                switch result {
+                case .success():
+                strongSelf.view.show(message: "Success")
+                case let .failure(error):
+                    strongSelf.view.show(message: error.localizedDescription)
+                }
+            }
+        }
+    }
     
     func prepapreDataSource() {
         let title: String?

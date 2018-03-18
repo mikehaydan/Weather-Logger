@@ -27,6 +27,7 @@ protocol WeatherListPresenter {
     var cellHeight: Float { get }
     var weatherCellIndetifier: String { get }
     init(view: WeatherListView)
+    func prepareDataSource()
     func prepareLocation()
     func configure(view: WeatherListCellView, atIndex index: Int)
     func configure(view: WeatherDetailsView, withModel model: WeatherApiModel)
@@ -53,6 +54,11 @@ class WeatherListPresenterImplementation: WeatherListPresenter {
         return WeatherDataRequestImplementation(apiClient: apiClient)
     }()
     
+    private lazy var coreDataSerivce: CoreDataWeatherDataSerivce = {
+        let serivce = CoreDataWeatherDataSerivceImplementation(viewContext: CoreDataStackImpementation.shared.persistentContainer.viewContext)
+        return serivce
+    }()
+    
     var dataSourceCount: Int {
         return dataSource.count
     }
@@ -74,6 +80,20 @@ class WeatherListPresenterImplementation: WeatherListPresenter {
     
     //MARK: - Private
     
+    private func save(model: WeatherApiModel) {
+        coreDataSerivce.add(model: model) { [weak self] (result) in
+            guard let strongSelf = self else {
+                return
+            }
+            switch result {
+            case .success(): break
+                strongSelf.view.show(message: "Success")
+            case let .failure(error):
+                strongSelf.view.show(message: error.localizedDescription)
+            }
+        }
+    }
+    
     private func getWeatherFor(longitude: Double, latitude: Double) {
         view.showProgres()
         weatherRequest.fetchWeatherFor(latitude: latitude, andLongitude: longitude) { [weak self] (result) in
@@ -81,7 +101,7 @@ class WeatherListPresenterImplementation: WeatherListPresenter {
                 strongSelf.view.hideProgres()
                 switch result {
                 case let .success(model):
-                    strongSelf.dataSource = [model]
+                    strongSelf.dataSource.append(model)
                     strongSelf.view.reloadView()
                 case let .failure(error):
                     strongSelf.view.showWithRetry(message: error.localizedDescription, retryText: "Retry", retryHandler: { [ weak self] in
@@ -97,6 +117,20 @@ class WeatherListPresenterImplementation: WeatherListPresenter {
     func prepareLocation() {
         if !locationSerive.prepareLocationService() {
             view.show(message: "Please, give access for location")
+        }
+    }
+    
+    func prepareDataSource() {
+        coreDataSerivce.fetchWeather { [weak self] (result) in
+            if let strongSelf = self {
+                switch result {
+                case let .success(models):
+                    strongSelf.dataSource = models
+                case let .failure(error):
+                    print(error.localizedDescription)
+                }
+                strongSelf.prepareLocation()
+            }
         }
     }
     
@@ -130,5 +164,10 @@ extension WeatherListPresenterImplementation: WeatherListCellDelegate {
     func detailsButtonTappedAt(index: Int) {
         let model = dataSource[index]
         view.showDetailsViewWith(model: model, forView: delegate!.preseterView)
+    }
+    
+    func saveButtonTappedAt(index: Int) {
+        let model = dataSource[index]
+        save(model: model)
     }
 }

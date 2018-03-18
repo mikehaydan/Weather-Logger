@@ -30,8 +30,7 @@ class WeatherListTableViewCell: UITableViewCell, WeatherListCellView {
     
     //MARK: - IBActions
     
-    
-    @IBAction func detaulsButtonTapped(_ sender: Any) {
+    @IBAction private func detailsButtonTapped(_ sender: Any) {
         presenter.detailsButtonTapped()
     }
     

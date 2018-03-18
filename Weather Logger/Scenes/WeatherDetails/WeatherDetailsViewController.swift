@@ -18,8 +18,8 @@ class WeatherDetailsViewController: UIViewController, WeatherDetailsView {
     
     //MARK: - LifeCycle
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         
         presenter.prepapreDataSource()
     }
@@ -27,7 +27,7 @@ class WeatherDetailsViewController: UIViewController, WeatherDetailsView {
     //MARK: - IBActions
     
     @IBAction private func saveButtonTapped(_ sender: Any) {
-        
+        presenter.saveData()
     }
     
     //MARK: - Public
@@ -39,7 +39,10 @@ class WeatherDetailsViewController: UIViewController, WeatherDetailsView {
     func set(title: String?) {
         navigationItem.title = title
     }
-
+    
+    func show(message: String) {
+        alert(message: message)
+    }
 }
 
 //MARK: - UITableViewDataSource

@@ -418,7 +418,7 @@
                                                                 <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
                                                             </state>
                                                             <connections>
-                                                                <action selector="detaulsButtonTapped:" destination="Ube-V0-Hx7" eventType="touchUpInside" id="vtb-Pw-yKP"/>
+                                                                <action selector="detailsButtonTapped:" destination="Ube-V0-Hx7" eventType="touchUpInside" id="vtb-Pw-yKP"/>
                                                             </connections>
                                                         </button>
                                                     </subviews>

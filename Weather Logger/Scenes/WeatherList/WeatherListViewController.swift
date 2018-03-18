@@ -23,11 +23,10 @@ class WeatherListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        presenter.prepareLocation()
+        presenter.prepareDataSource()
     }
     
     //MARK: - IBActions
-    
     
     
     //MARK: - Private
@@ -70,6 +69,8 @@ extension WeatherListViewController: WeatherListView {
     func showWithRetry(message: String, retryText: String, retryHandler: @escaping () -> ()) {
         alert(message: message, okText: retryText, okHandler: { (_) in
             retryHandler()
+        }, cancelHandler: {(_) in
+            
         })
     }
     

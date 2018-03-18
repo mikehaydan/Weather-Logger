@@ -54,6 +54,7 @@
 		E8D62F1720584C340052E089 /* WeatherLocalModel+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8D62F0B20584C330052E089 /* WeatherLocalModel+CoreDataProperties.swift */; };
 		E8D84FC72056812000BCA58A /* WeatherDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8D84FC62056812000BCA58A /* WeatherDetailsViewController.swift */; };
 		E8D84FC92056813500BCA58A /* WeatherDetailsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8D84FC82056813500BCA58A /* WeatherDetailsPresenter.swift */; };
+		E8F5941E205D5F9F00483C7F /* WeatherLocalModel+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8F5941D205D5F9F00483C7F /* WeatherLocalModel+Extensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -126,6 +127,7 @@
 		E8D62F0B20584C330052E089 /* WeatherLocalModel+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "WeatherLocalModel+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		E8D84FC62056812000BCA58A /* WeatherDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherDetailsViewController.swift; sourceTree = "<group>"; };
 		E8D84FC82056813500BCA58A /* WeatherDetailsPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherDetailsPresenter.swift; sourceTree = "<group>"; };
+		E8F5941D205D5F9F00483C7F /* WeatherLocalModel+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WeatherLocalModel+Extensions.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -422,6 +424,7 @@
 			children = (
 				E8D62F0A20584C330052E089 /* WeatherLocalModel+CoreDataClass.swift */,
 				E8D62F0B20584C330052E089 /* WeatherLocalModel+CoreDataProperties.swift */,
+				E8F5941D205D5F9F00483C7F /* WeatherLocalModel+Extensions.swift */,
 			);
 			path = WeatherLocalModel;
 			sourceTree = "<group>";
@@ -575,6 +578,7 @@
 				E89F32F1205A8AA6000EFC4F /* Errors.swift in Sources */,
 				E80880A12056DEE7007D75D5 /* WeatherInfoTableViewCell.swift in Sources */,
 				E8D62F0F20584C340052E089 /* MainLocal+CoreDataProperties.swift in Sources */,
+				E8F5941E205D5F9F00483C7F /* WeatherLocalModel+Extensions.swift in Sources */,
 				E8D62F1220584C340052E089 /* CordsLocal+CoreDataClass.swift in Sources */,
 				E84747342057D33800A44D96 /* UITableViewCell + Extension.swift in Sources */,
 				E8D62F1520584C340052E089 /* SysLocal+CoreDataProperties.swift in Sources */,
