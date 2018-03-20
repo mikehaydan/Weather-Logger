@@ -7,3 +7,15 @@
 //
 
 import Foundation
+@testable import Weather_Logger
+
+class WeatherDataRequestStub: WeatherDataRequest {
+    
+    var resultToBeReturned: Result<WeatherModel>!
+    
+    func fetchWeatherFor(latitude: Double, andLongitude longitude: Double, completion: @escaping WeatherDataCompletion) {
+        completion(resultToBeReturned)
+    }
+    
+    
+}

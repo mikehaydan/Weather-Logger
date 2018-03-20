@@ -33,7 +33,12 @@ struct ApiParseError: Error {
     }
 }
 
-struct CoreDataError: Error {
+struct CoreDataError: LocalizedError {
+    
+    var errorDescription: String? {
+        return message
+    }
+    
     var localizedDescription: String {
         return message
     }

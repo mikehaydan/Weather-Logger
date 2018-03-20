@@ -18,6 +18,7 @@ class WeatherListViewSpy: WeatherListView {
     var isProgressHide = false
     var isViewReloadedAnimated = false
     var isDetailsShowed = false
+    var callRetryHandler = false
     
     func show(message: String) {
         showedMessage = message
@@ -26,6 +27,10 @@ class WeatherListViewSpy: WeatherListView {
     func showWithRetry(message: String, retryText: String, retryHandler: @escaping () -> ()) {
         showedMessage = message
         self.retryText = retryText
+        if callRetryHandler {
+            callRetryHandler = false
+            retryHandler()
+        }
     }
     
     func reloadView() {
@@ -40,7 +45,7 @@ class WeatherListViewSpy: WeatherListView {
         isProgressHide = true
     }
     
-    func showDetailsViewWith(model: WeatherApiModel, forView view: WeatherDetailsView) {
+    func showDetailsViewWith(model: WeatherModel, forView view: WeatherDetailsView) {
         isDetailsShowed = true
     }
     

@@ -7,3 +7,11 @@
 //
 
 import Foundation
+
+@testable import Weather_Logger
+
+extension Result: Equatable { }
+
+public func ==<T>(lhs: Result<T>, rhs: Result<T>) -> Bool {
+    return String(stringInterpolationSegment: lhs) == String(stringInterpolationSegment: rhs)
+}

@@ -19,7 +19,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="pIb-5E-65s">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="pIb-5E-65s">
                                 <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <view key="tableFooterView" contentMode="scaleToFill" id="2QQ-pi-neu" userLabel="Foooter view">
@@ -471,16 +471,17 @@
                                     <outlet property="delegate" destination="eIv-c7-dm0" id="Alk-kK-IYs"/>
                                 </connections>
                             </tableView>
-                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="ACq-Ih-m8b">
-                                <rect key="frame" x="169" y="315" width="37" height="37"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="ACq-Ih-m8b">
+                                <rect key="frame" x="169" y="347" width="37" height="37"/>
                                 <color key="color" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                             </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="3ys-q8-rtJ" firstAttribute="trailing" secondItem="wLP-7S-QJ8" secondAttribute="trailing" id="HcI-qe-z8U"/>
+                            <constraint firstItem="ACq-Ih-m8b" firstAttribute="centerY" secondItem="wLP-7S-QJ8" secondAttribute="centerY" id="LbU-BU-Kvx"/>
                             <constraint firstItem="3ys-q8-rtJ" firstAttribute="bottom" secondItem="wLP-7S-QJ8" secondAttribute="bottom" id="YmG-AJ-q1k"/>
+                            <constraint firstItem="ACq-Ih-m8b" firstAttribute="centerX" secondItem="wLP-7S-QJ8" secondAttribute="centerX" id="eWz-dC-M2i"/>
                             <constraint firstItem="wLP-7S-QJ8" firstAttribute="leading" secondItem="3ys-q8-rtJ" secondAttribute="leading" id="kyM-g9-lZd"/>
                             <constraint firstItem="wLP-7S-QJ8" firstAttribute="top" secondItem="3ys-q8-rtJ" secondAttribute="top" id="t95-rx-vqK"/>
                         </constraints>

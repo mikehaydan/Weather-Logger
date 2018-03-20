@@ -11,7 +11,9 @@ import Foundation
 
 class LocationServiceStub: LocationService {
     
-    var isLocationPrepared = false
+    var locationIsEnabledToBeReturned: Bool!
+    
+    var resultToBeReturned: (longitude: Double, latitude: Double)?
     
     var delegate: LocationServiceDelegate?
     
@@ -20,13 +22,16 @@ class LocationServiceStub: LocationService {
     }
     
     var isLocationEnabled: Bool {
-        return isLocationPrepared
+        return locationIsEnabledToBeReturned
     }
     
     func prepareLocationService() -> Bool {
-        isLocationPrepared = true
-        return isLocationPrepared
+        getLocation()
+        return locationIsEnabledToBeReturned
     }
     
-    
-}
+    func getLocation() {
+        if let resultToBeReturned = resultToBeReturned {
+                    delegate?.updateLocationWith(longitude: resultToBeReturned.longitude, latitude: resultToBeReturned.latitude)
+        }
+    }}

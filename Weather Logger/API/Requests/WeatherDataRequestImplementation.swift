@@ -53,7 +53,7 @@ class WeatherDataRequestImplementation: WeatherDataRequest {
     func fetchWeatherFor(latitude: Double, andLongitude longitude: Double, completion: @escaping WeatherDataCompletion) {
         let request = GetWeatherByCoordsRequest()
         request.configure(latitude: latitude, longitude: longitude)
-        apiClient.execute(request: request) { (result: Result<ApiResponse<WeatherApiModel>>) in
+        apiClient.execute(request: request) { (result: Result<ApiResponse<WeatherModel>>) in
             switch result {
             case let .success(response):
                 let model = response.model

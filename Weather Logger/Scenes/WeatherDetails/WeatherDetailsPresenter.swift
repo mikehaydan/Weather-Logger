@@ -10,15 +10,15 @@ import Foundation
 
 protocol WeatherDetailsViewDelegate: class {
     var preseterView: WeatherDetailsView { get }
-    var presentedModel: WeatherApiModel? { get }
+    var presentedModel: WeatherModel? { get }
     func deletePresentedModel()
 }
 
 protocol WeatherDetailsPresenter {
     var dataSourceCount: Int { get }
-    var savedAction: ((WeatherApiModel) -> ())? { set get }
-    init(view: WeatherDetailsView, model: WeatherApiModel?)
-    func set(model: WeatherApiModel?)
+    var savedAction: ((WeatherModel) -> ())? { set get }
+    init(view: WeatherDetailsView, model: WeatherModel?)
+    func set(model: WeatherModel?)
     func getCellIdentifierAt(index: Int) -> String
     func prepapreDataSource()
     func configure(view: WeatherDetailsCellView, atIndex index: Int)
@@ -39,30 +39,29 @@ class WeatherDetailsPresenterImplementation: WeatherDetailsPresenter {
     
     private unowned let view: WeatherDetailsView
     
-    private weak var model: WeatherApiModel? {
+    weak var model: WeatherModel? {
         didSet {
             prepapreDataSource()
         }
     }
     
-    private var dataSource: [WeatherDetailsCellModel] = []
+    var dataSource: [WeatherDetailsCellModel] = []
     
-    private lazy var coreDataSerivce: CoreDataWeatherDataSerivce = {
-        let serivce = CoreDataWeatherDataSerivceImplementation(viewContext: CoreDataStackImpementation.shared.persistentContainer.viewContext)
-        return serivce
-    }()
+    var coreDataSerivce: CoreDataWeatherDataSerivce!
     
     var dataSourceCount: Int {
         return dataSource.count
     }
     
-    var savedAction: ((WeatherApiModel) -> ())?
+    var savedAction: ((WeatherModel) -> ())?
     
     //MARK: - LifeCycle
     
-    required init(view: WeatherDetailsView, model: WeatherApiModel?) {
+    required init(view: WeatherDetailsView, model: WeatherModel?) {
         self.view = view
         self.model = model
+        
+        prepareServices()
     }
     
     //MARK: - IBActions
@@ -71,24 +70,25 @@ class WeatherDetailsPresenterImplementation: WeatherDetailsPresenter {
     
     //MARK: - Private
     
-    
+    private func prepareServices() {
+        coreDataSerivce = CoreDataWeatherDataSerivceImplementation(viewContext: CoreDataStackImpementation.shared.persistentContainer.viewContext)
+    }
     
     //MARK: - Public
     
     func saveData() {
         if let model = model {
             coreDataSerivce.add(model: model) { [weak self] (result) in
-                guard let strongSelf = self else {
-                    return
-                }
-                switch result {
-                case let .success(coreDataModel):
-                    strongSelf.model?.coreDataModel = coreDataModel
-                strongSelf.view.show(message: "Success")
-                strongSelf.view.save(enabled: false)
-                strongSelf.savedAction?(model)
-                case let .failure(error):
-                    strongSelf.view.show(message: error.localizedDescription)
+                if let strongSelf = self {
+                    switch result {
+                    case let .success(coreDataModel):
+                        strongSelf.model?.coreDataModel = coreDataModel
+                        strongSelf.view.show(message: "Success")
+                        strongSelf.view.save(enabled: false)
+                        strongSelf.savedAction?(model)
+                    case let .failure(error):
+                        strongSelf.view.show(message: error.localizedDescription)
+                    }
                 }
             }
         }
@@ -120,7 +120,7 @@ class WeatherDetailsPresenterImplementation: WeatherDetailsPresenter {
         return dataSource[index].cellIdentifier
     }
     
-    func set(model: WeatherApiModel?) {
+    func set(model: WeatherModel?) {
         self.model = model
     }
     
@@ -138,7 +138,7 @@ extension WeatherDetailsPresenterImplementation: WeatherDetailsViewDelegate {
         return view
     }
     
-    var presentedModel: WeatherApiModel? {
+    var presentedModel: WeatherModel? {
         return model
     }
     

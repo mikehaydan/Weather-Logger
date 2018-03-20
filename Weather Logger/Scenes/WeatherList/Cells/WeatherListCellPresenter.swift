@@ -11,6 +11,7 @@ import UIKit
 private struct WeatherListCellPresenterConstants {
     static let minSwipeDifference: CGFloat = 13
     static let deleteButtonWidth: CGFloat = 60
+    static let deleteButtonMoveMultiplayer: CGFloat = 0.4
 }
 
 protocol WeatherListCellDelegate: class {
@@ -22,7 +23,7 @@ protocol WeatherListCellPresenter {
     var swipeGesureShouldBegin: Bool { get }
     init(view: WeatherListCellView)
     func detailsButtonTapped()
-    func configureWith(model: WeatherApiModel, delegate: WeatherListCellDelegate?, atIndex index: Int)
+    func configureWith(model: WeatherModel, delegate: WeatherListCellDelegate?, atIndex index: Int)
     func prepareDeleteButtonForChangedStateWith(point: CGPoint)
     func prepareDeleteButtonForFinishedState()
     func deletButtonTapped()
@@ -37,15 +38,16 @@ protocol WeatherListCellView: class {
     func setDeleteButtonConstraintWith(value: CGFloat)
     func reloadViewAnimated()
     func setGesture(enabled: Bool)
+    func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool
 }
 
 class WeatherListCellPresenterImplementation: WeatherListCellPresenter {
     
     //MARK: - Properties
     
-    private var lastSwipedConstraintValue: CGFloat = 0
+    var lastSwipedConstraintValue: CGFloat = 0
     
-    private var currentDeleteButtonValue: CGFloat = 0
+    var currentMovingViewCenterValue: CGFloat = 0
     
     unowned let view: WeatherListCellView
     
@@ -72,7 +74,7 @@ class WeatherListCellPresenterImplementation: WeatherListCellPresenter {
     
     //MARK: - Public
     
-    func configureWith(model: WeatherApiModel, delegate: WeatherListCellDelegate?, atIndex index: Int) {
+    func configureWith(model: WeatherModel, delegate: WeatherListCellDelegate?, atIndex index: Int) {
         self.index = index
         self.delegate = delegate
         let dateFormater = DateFormatter()
@@ -89,24 +91,33 @@ class WeatherListCellPresenterImplementation: WeatherListCellPresenter {
     }
     
     func prepareDeleteButtonForChangedStateWith(point: CGPoint) {
-        let newPoint = lastSwipedConstraintValue + point.x * 0.4
-        let value: CGFloat = newPoint <= 0 ? newPoint : 0
+        let newPoint = lastSwipedConstraintValue + point.x * WeatherListCellPresenterConstants.deleteButtonMoveMultiplayer
+        let value: CGFloat
+        if newPoint <= 0 {
+            value = newPoint
+        } else {
+            value = 0
+        }
         view.setDeleteButtonConstraintWith(value: value)
-        currentDeleteButtonValue = value
+        currentMovingViewCenterValue = value
     }
     
     func prepareDeleteButtonForFinishedState() {
-        if lastSwipedConstraintValue < currentDeleteButtonValue && (currentDeleteButtonValue - lastSwipedConstraintValue) > WeatherListCellPresenterConstants.minSwipeDifference {
+        if (lastSwipedConstraintValue < currentMovingViewCenterValue && (currentMovingViewCenterValue - lastSwipedConstraintValue) > WeatherListCellPresenterConstants.minSwipeDifference) || currentMovingViewCenterValue >= 0 {
             view.setDeleteButtonConstraintWith(value: 0)
-            currentDeleteButtonValue = 0
+            currentMovingViewCenterValue = 0
         } else {
-            currentDeleteButtonValue = -WeatherListCellPresenterConstants.deleteButtonWidth
-            view.setDeleteButtonConstraintWith(value: currentDeleteButtonValue)
+            currentMovingViewCenterValue = -WeatherListCellPresenterConstants.deleteButtonWidth
+            view.setDeleteButtonConstraintWith(value: currentMovingViewCenterValue)
         }
-        lastSwipedConstraintValue = currentDeleteButtonValue
+        lastSwipedConstraintValue = currentMovingViewCenterValue
+        view.reloadViewAnimated()
     }
     
     func deletButtonTapped() {
         delegate?.deleteButtonTappedAt(index: index)
+        lastSwipedConstraintValue = 0
+        view.setDeleteButtonConstraintWith(value: lastSwipedConstraintValue)
+        view.reloadViewAnimated()
     }
 }

@@ -8,7 +8,7 @@
 
 import Foundation
 
-typealias WeatherDataCompletion = ((Result<WeatherApiModel>) -> ())
+typealias WeatherDataCompletion = ((Result<WeatherModel>) -> ())
 
 protocol WeatherDataRequest {
     func fetchWeatherFor(latitude: Double, andLongitude longitude: Double, completion: @escaping WeatherDataCompletion)

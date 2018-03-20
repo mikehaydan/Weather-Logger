@@ -18,11 +18,6 @@ protocol WeatherDetailsCellView {
     func set(model: WeatherDetailsCellModel)
 }
 
-protocol WeatherDetailsCellPresenter where M: WeatherDetailsCellModel {
-    associatedtype M
-    func set(model: M)
-}
-
 struct WeatherWeatherDetailsCellModelImplementation: WeatherDetailsCellModel {
     var cellIdentifier: String
     

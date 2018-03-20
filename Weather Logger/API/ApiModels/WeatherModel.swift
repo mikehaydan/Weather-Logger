@@ -8,7 +8,7 @@
 
 import Foundation
 
-class WeatherApiModel: InitializableWithData, InitializableWithJson, Codable {
+class WeatherModel: InitializableWithData, InitializableWithJson, Codable {
     let id: Int
     let name: String
     let dt: Int
@@ -25,7 +25,7 @@ class WeatherApiModel: InitializableWithData, InitializableWithJson, Codable {
         if let data = data {
             let jsonDecoder = JSONDecoder()
             do {
-                let model = try jsonDecoder.decode(WeatherApiModel.self, from: data)
+                let model = try jsonDecoder.decode(WeatherModel.self, from: data)
                 self.id = model.id
                 self.name = model.name
                 self.dt = model.dt

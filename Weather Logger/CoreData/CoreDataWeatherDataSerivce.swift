@@ -8,13 +8,13 @@
 
 import Foundation
 
-typealias WeatherArrayDataCompletion = ((Result<[WeatherApiModel]>) -> ())
+typealias WeatherArrayDataCompletion = ((Result<[WeatherModel]>) -> ())
 typealias WeatherVoidDataCompletion = ((Result<Void>) -> ())
 typealias WeatherCoreDataCompletion = ((Result<WeatherLocalModel>) -> ())
 
 protocol CoreDataWeatherDataSerivce {
-    func add(model: WeatherApiModel, complation: WeatherCoreDataCompletion)
-    func delete(model: WeatherApiModel) -> Bool
+    func add(model: WeatherModel, complation: WeatherCoreDataCompletion)
+    func delete(model: WeatherModel) -> Bool
     func fetchWeather(completion: @escaping WeatherArrayDataCompletion)
 }
 
@@ -26,7 +26,7 @@ class CoreDataWeatherDataSerivceImplementation: CoreDataWeatherDataSerivce {
         self.viewContext = viewContext
     }
     
-    func add(model: WeatherApiModel, complation: WeatherCoreDataCompletion) {
+    func add(model: WeatherModel, complation: WeatherCoreDataCompletion) {
         if let coreDataModel = viewContext.addEntity(withType: WeatherLocalModel.self) {
             do {
                 try coreDataModel.set(model: model)
@@ -44,7 +44,7 @@ class CoreDataWeatherDataSerivceImplementation: CoreDataWeatherDataSerivce {
         }
     }
     
-    func delete(model: WeatherApiModel) -> Bool {
+    func delete(model: WeatherModel) -> Bool {
         let predicate = NSPredicate(format: "id==%d", model.id)
         let entities = viewContext.allEntities(withType: WeatherLocalModel.self, predicate: predicate)
         if let entity = entities.first {
@@ -56,20 +56,22 @@ class CoreDataWeatherDataSerivceImplementation: CoreDataWeatherDataSerivce {
                 return false
             }
         } else {
-            return true
+            return false
         }
     }
     
     func fetchWeather(completion: @escaping WeatherArrayDataCompletion) {
         let weatherArray = viewContext.allEntities(withType: WeatherLocalModel.self)
-        var seralizerModelsArray: [WeatherApiModel] = []
+        var seralizerModelsArray: [WeatherModel] = []
         for item in weatherArray {
-            if var model = try? item.weatherModel() {
+            do {
+                let model = try item.weatherModel()
                 seralizerModelsArray.append(model)
                 model.coreDataModel = item
-            } else {
-                completion(.failure(CoreDataError(message: "Failed getting the weather from the data base")))
-                break
+            } catch {
+                let returnedError = error as! CoreDataError
+                completion(.failure(CoreDataError(message: returnedError.localizedDescription)))
+                return
             }
         }
         completion(.success(seralizerModelsArray))

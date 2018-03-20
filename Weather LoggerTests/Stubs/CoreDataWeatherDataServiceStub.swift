@@ -13,13 +13,13 @@ class CoreDataWeatherDataServiceStub: CoreDataWeatherDataSerivce {
     
     var addingResultToBeReturned: Result<WeatherLocalModel>!
     var deleteResultToBeReturned: Bool!
-    var fetchResultToBeReturned: Result<[WeatherApiModel]>!
+    var fetchResultToBeReturned: Result<[WeatherModel]>!
     
-    func add(model: WeatherApiModel, complation: (Result<WeatherLocalModel>) -> ()) {
+    func add(model: WeatherModel, complation: (Result<WeatherLocalModel>) -> ()) {
         complation(addingResultToBeReturned)
     }
     
-    func delete(model: WeatherApiModel) -> Bool {
+    func delete(model: WeatherModel) -> Bool {
         return deleteResultToBeReturned
     }
     

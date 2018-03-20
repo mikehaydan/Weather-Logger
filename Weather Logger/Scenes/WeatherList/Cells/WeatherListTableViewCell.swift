@@ -85,7 +85,7 @@ class WeatherListTableViewCell: UITableViewCell, WeatherListCellView {
     
     func reloadViewAnimated() {
         UIView.animate(withDuration: 0.3) { [weak self] in
-            self?.contentView.layoutIfNeeded()
+            self?.layoutIfNeeded()
         }
     }
     

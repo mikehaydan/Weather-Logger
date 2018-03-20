@@ -26,3 +26,4 @@ class WeatherInfoTableViewCell: BaseWeatherDetailsTableViewCell {
         weatherDescriptionLabel.text = model.descriptionText
     }
 }
+

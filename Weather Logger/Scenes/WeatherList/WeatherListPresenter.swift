@@ -19,7 +19,7 @@ protocol WeatherListView: class {
     func reloadView()
     func showProgres()
     func hideProgres()
-    func showDetailsViewWith(model: WeatherApiModel, forView view: WeatherDetailsView)
+    func showDetailsViewWith(model: WeatherModel, forView view: WeatherDetailsView)
     func reloadViewAnimated()
 }
 
@@ -31,7 +31,7 @@ protocol WeatherListPresenter {
     func prepareDataSource()
     func prepareLocation()
     func configure(view: WeatherListCellView, atIndex index: Int)
-    func configure(view: WeatherDetailsView, withModel model: WeatherApiModel)
+    func configure(view: WeatherDetailsView, withModel model: WeatherModel)
 }
 
 //MARK: - WeatherListPresenterImplementation
@@ -42,23 +42,15 @@ class WeatherListPresenterImplementation: WeatherListPresenter {
     
     weak var delegate: WeatherDetailsViewDelegate!
     
-    private var dataSource: [WeatherApiModel] = []
+    var dataSource: [WeatherModel] = []
     
     private unowned let view: WeatherListView
     
-    private lazy var locationSerive: LocationService = {
-        return LocationServiceImplementation(delegate: self)
-    }()
+    var locationSerive: LocationService!
     
-    private lazy var weatherRequest: WeatherDataRequest = {
-        let apiClient = ApiClientImplelentation.defaultConfiguration
-        return WeatherDataRequestImplementation(apiClient: apiClient)
-    }()
+    var weatherRequest: WeatherDataRequest!
     
-    private lazy var coreDataSerivce: CoreDataWeatherDataSerivce = {
-        let serivce = CoreDataWeatherDataSerivceImplementation(viewContext: CoreDataStackImpementation.shared.persistentContainer.viewContext)
-        return serivce
-    }()
+    var coreDataSerivce: CoreDataWeatherDataSerivce!
     
     var dataSourceCount: Int {
         return dataSource.count
@@ -66,7 +58,6 @@ class WeatherListPresenterImplementation: WeatherListPresenter {
     
     var cellHeight: Float {
         return WeatherListPresenterConstants.weatherListTableViewCellHeight
-        
     }
     
     var weatherCellIndetifier: String {
@@ -77,6 +68,8 @@ class WeatherListPresenterImplementation: WeatherListPresenter {
     
     required init(view: WeatherListView) {
         self.view = view
+        
+        self.prepareServices()
     }
     
     //MARK: - Private
@@ -99,6 +92,15 @@ class WeatherListPresenterImplementation: WeatherListPresenter {
         }
     }
     
+    private func prepareServices() {
+        coreDataSerivce = CoreDataWeatherDataSerivceImplementation(viewContext: CoreDataStackImpementation.shared.persistentContainer.viewContext)
+        
+        let apiClient = ApiClientImplelentation.defaultConfiguration
+        weatherRequest = WeatherDataRequestImplementation(apiClient: apiClient)
+        
+        locationSerive = LocationServiceImplementation(delegate: self)
+    }
+    
     //MARK: - Public
     
     func prepareLocation() {
@@ -110,11 +112,8 @@ class WeatherListPresenterImplementation: WeatherListPresenter {
     func prepareDataSource() {
         coreDataSerivce.fetchWeather { [weak self] (result) in
             if let strongSelf = self {
-                switch result {
-                case let .success(models):
+                if case let .success(models) = result  {
                     strongSelf.dataSource = models
-                case let .failure(error):
-                    print(error.localizedDescription)
                 }
                 strongSelf.prepareLocation()
             }
@@ -126,13 +125,7 @@ class WeatherListPresenterImplementation: WeatherListPresenter {
         view.presenter.configureWith(model: model, delegate: self, atIndex: index)
     }
     
-    func configure(view: WeatherDetailsView, forModelAt index: Int) {
-        let model = dataSource[index]
-        let presenter = WeatherDetailsPresenterImplementation(view: view, model: model)
-        view.presenter = presenter
-    }
-    
-    func configure(view: WeatherDetailsView, withModel model: WeatherApiModel) {
+    func configure(view: WeatherDetailsView, withModel model: WeatherModel) {
         view.presenter.set(model: model)
         view.presenter.savedAction = { [weak self] (savedModel) in
             self?.view.reloadView()
@@ -166,6 +159,8 @@ extension WeatherListPresenterImplementation: WeatherListCellDelegate {
     
     func detailsButtonTappedAt(index: Int) {
         let model = dataSource[index]
+        
+        configure(view: delegate!.preseterView, withModel: model)
         view.showDetailsViewWith(model: model, forView: delegate!.preseterView)
     }
 }

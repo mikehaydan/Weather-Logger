@@ -16,7 +16,7 @@ class WeatherListViewController: UIViewController {
     
     @IBOutlet private weak var activityIndicator: UIActivityIndicatorView!
     
-    var presenter: WeatherListPresenter!
+    var presenter: WeatherListPresenterImplementation!
     
     //MARK: - LifeCycle
     
@@ -94,10 +94,8 @@ extension WeatherListViewController: WeatherListView {
         tableView.reloadSections(IndexSet(integer: 0), with: .automatic)
     }
     
-    func showDetailsViewWith(model: WeatherApiModel, forView view: WeatherDetailsView) {
+    func showDetailsViewWith(model: WeatherModel, forView view: WeatherDetailsView) {
         let detailsViewController = view as! WeatherDetailsViewController
-        
-        presenter.configure(view: detailsViewController, withModel: model)
         
         splitViewController!.showDetailViewController(detailsViewController, sender: nil)
     }

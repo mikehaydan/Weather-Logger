@@ -1,45 +1,26 @@
 //
-//  ApiClient.swift
-//  MVP+Tests
+//  ApiClientImplelentationSpy.swift
+//  Weather LoggerTests
 //
-//  Created by Mike Haydan on 02/03/2018.
+//  Created by Mike Haydan on 19/03/2018.
 //  Copyright © 2018 Mike Haydan. All rights reserved.
 //
 
 import Foundation
+@testable import Weather_Logger
 
-enum HttpMehod: String {
-    case get = "GET"
-}
-
-protocol ApiRequest {
-    var urlRequest: URLRequest { get }
-}
-
-protocol ApiClient {
-    func execute<T>(request: ApiRequest, completion: @escaping (_ result: Result<ApiResponse<T>>) -> ())
-}
-
-protocol URLSessionProtocol {
-    func dataTask(with request: URLRequest, completionHandler: @escaping (Data?, URLResponse?, Error?) -> ()) -> URLSessionDataTask
-}
-
-extension URLSession: URLSessionProtocol { }
-
-class ApiClientImplelentation: ApiClient {
+class ApiClientImplelentationSpy: ApiClient {
+    typealias URLSessionCompletionHandlerResponse = (data: Data?, response: URLResponse?, error: Error?)
     
-    private let urlSession: URLSessionProtocol
+    private let urlSession: UrlSessionStub
     
-    class var defaultConfiguration: ApiClientImplelentation {
-        return ApiClientImplelentation(urlSessionconfiguration: .default, completionQueue: .main)
+    init() {
+        let session = UrlSessionStub()
+        urlSession = session
     }
     
-    init(urlSessionconfiguration: URLSessionConfiguration, completionQueue: OperationQueue) {
-        urlSession = URLSession(configuration: urlSessionconfiguration, delegate: nil, delegateQueue: completionQueue)
-    }
-    
-    init(urlSession: URLSessionProtocol) {
-        self.urlSession = urlSession
+    func set(response: URLSessionCompletionHandlerResponse) {
+        urlSession.response.append(response)
     }
     
     func execute<T>(request: ApiRequest, completion: @escaping (_ result: Result<ApiResponse<T>>) -> ()) {
@@ -61,6 +42,13 @@ class ApiClientImplelentation: ApiClient {
                 completion(Result.failure(error))
             }
         })
+        
         dataTask.resume()
+    }
+}
+
+extension HTTPURLResponse {
+    convenience init(statusCode: Int) {
+        self.init(url: URL(string: "https://www.google.com")!, statusCode: statusCode, httpVersion: nil, headerFields: nil)!
     }
 }

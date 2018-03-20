@@ -52,4 +52,8 @@ class WeatherListCellViewSpy: WeatherListCellView {
     func setGesture(enabled: Bool) {
         gestureEnabled = enabled
     }
+    
+    func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+        return presenter.swipeGesureShouldBegin
+    }
 }
