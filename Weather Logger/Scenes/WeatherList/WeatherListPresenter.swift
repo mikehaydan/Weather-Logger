@@ -64,6 +64,8 @@ class WeatherListPresenterImplementation: WeatherListPresenter {
         return WeatherListPresenterConstants.weatherListTableViewCellIdentifier
     }
     
+    var lastUserdCoords: (latitude: Double, longitude: Double)?
+    
     //MARK: - LifeCycle
     
     required init(view: WeatherListView) {
@@ -88,6 +90,7 @@ class WeatherListPresenterImplementation: WeatherListPresenter {
                         self?.getWeatherFor(longitude: longitude, latitude: latitude)
                     })
                 }
+                strongSelf.lastUserdCoords = (latitude: latitude, longitude: longitude)
             }
         }
     }
@@ -131,6 +134,12 @@ class WeatherListPresenterImplementation: WeatherListPresenter {
             self?.view.reloadView()
         }
     }
+    
+    func fetchDataSourceIfNeeded() {
+        if let coords = lastUserdCoords, dataSource.count == 0 {
+            getWeatherFor(longitude: coords.longitude, latitude: coords.latitude)
+        }
+    }
 }
 
 //MARK: - LocationServiceDelegate
@@ -152,6 +161,7 @@ extension WeatherListPresenterImplementation: WeatherListCellDelegate {
             if delegate.presentedModel === model {
                 delegate.deletePresentedModel()
             }
+            fetchDataSourceIfNeeded()
         } else {
             view.show(message: "An error occurred, while delete object")
         }

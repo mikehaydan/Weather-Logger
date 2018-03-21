@@ -28,9 +28,20 @@ class Weather_LoggerUITests: XCTestCase {
         super.tearDown()
     }
     
-    func testExample() {
-        // Use recording to get started writing UI tests.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+    func test_show_details() {
+        XCUIApplication().tables/*@START_MENU_TOKEN@*/.cells.buttons["Details >"]/*[[".cells.buttons[\"Details >\"]",".buttons[\"Details >\"]"],[[[-1,1],[-1,0]]],[1]]@END_MENU_TOKEN@*/.tap()
     }
     
+    func test_show_details_save_delete() {
+        
+        let app = XCUIApplication()
+        let tablesQuery = app.tables
+        let detailsButton = tablesQuery/*@START_MENU_TOKEN@*/.buttons["Details >"]/*[[".cells.buttons[\"Details >\"]",".buttons[\"Details >\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/
+        detailsButton.tap()
+        tablesQuery.buttons["Save"].tap()
+        app.alerts.buttons["Ok"].tap()
+        app.navigationBars["Uzhhorod"].buttons["Weather list"].tap()
+        detailsButton.tap()
+        tablesQuery/*@START_MENU_TOKEN@*/.buttons["Delete"]/*[[".cells.buttons[\"Delete\"]",".buttons[\"Delete\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
+    }
 }

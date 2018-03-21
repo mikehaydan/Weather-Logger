@@ -219,4 +219,19 @@ class WeatherListPresenterTest: XCTestCase {
         //Then
         XCTAssertEqual(expectedIdentifier, result)
     }
+    
+    func test_refreshDataSourceIfNeeded() {
+        //Given
+        let expectedLastUSedCorrds: (Double, Double) = (20, 20)
+        let expectedModel = WeatherModel.createModelsArray(count: 1).first!
+        presenter.dataSource = []
+        presenter.lastUserdCoords = expectedLastUSedCorrds
+        request.resultToBeReturned = Result.success(expectedModel)
+        
+        //When
+        presenter.fetchDataSourceIfNeeded()
+        
+        //Then
+        XCTAssertEqual(presenter.dataSource.first!.id, expectedModel.id)
+    }
 }
