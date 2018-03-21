@@ -12,7 +12,6 @@
 		E80880A52056E451007D75D5 /* WeatherAdditionalDataTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E80880A42056E451007D75D5 /* WeatherAdditionalDataTableViewCell.swift */; };
 		E812BDFE2056E92D00656918 /* WeatherDetailCellProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = E812BDFD2056E92D00656918 /* WeatherDetailCellProtocols.swift */; };
 		E84747342057D33800A44D96 /* UITableViewCell + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E84747332057D33800A44D96 /* UITableViewCell + Extension.swift */; };
-		E869C9692053CB9200046B25 /* Weather_LoggerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E869C9682053CB9200046B25 /* Weather_LoggerUITests.swift */; };
 		E869C97F2053D7B200046B25 /* SplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E869C97E2053D7B200046B25 /* SplitViewController.swift */; };
 		E869C99B2053D84000046B25 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E869C98D2053D83F00046B25 /* AppDelegate.swift */; };
 		E869C99D2053D84000046B25 /* Weather_Logger.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E869C98F2053D83F00046B25 /* Weather_Logger.xcdatamodeld */; };
@@ -84,13 +83,6 @@
 			remoteGlobalIDString = E869C93F2053CB9200046B25;
 			remoteInfo = "Weather Logger";
 		};
-		E869C9652053CB9200046B25 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = E869C9382053CB9200046B25 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = E869C93F2053CB9200046B25;
-			remoteInfo = "Weather Logger";
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -102,9 +94,6 @@
 		E869C9402053CB9200046B25 /* Weather Logger.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Weather Logger.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E869C9592053CB9200046B25 /* Weather LoggerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Weather LoggerTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E869C95F2053CB9200046B25 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		E869C9642053CB9200046B25 /* Weather LoggerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Weather LoggerUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		E869C9682053CB9200046B25 /* Weather_LoggerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Weather_LoggerUITests.swift; sourceTree = "<group>"; };
-		E869C96A2053CB9200046B25 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E869C97E2053D7B200046B25 /* SplitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplitViewController.swift; sourceTree = "<group>"; };
 		E869C98D2053D83F00046B25 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E869C98E2053D83F00046B25 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -185,13 +174,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		E869C9612053CB9200046B25 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -211,7 +193,6 @@
 			children = (
 				E869C9422053CB9200046B25 /* Weather Logger */,
 				E869C95C2053CB9200046B25 /* Weather LoggerTests */,
-				E869C9672053CB9200046B25 /* Weather LoggerUITests */,
 				E869C9412053CB9200046B25 /* Products */,
 				E869C9C8205595E100046B25 /* Frameworks */,
 			);
@@ -222,7 +203,6 @@
 			children = (
 				E869C9402053CB9200046B25 /* Weather Logger.app */,
 				E869C9592053CB9200046B25 /* Weather LoggerTests.xctest */,
-				E869C9642053CB9200046B25 /* Weather LoggerUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -255,15 +235,6 @@
 				E869C95F2053CB9200046B25 /* Info.plist */,
 			);
 			path = "Weather LoggerTests";
-			sourceTree = "<group>";
-		};
-		E869C9672053CB9200046B25 /* Weather LoggerUITests */ = {
-			isa = PBXGroup;
-			children = (
-				E869C9682053CB9200046B25 /* Weather_LoggerUITests.swift */,
-				E869C96A2053CB9200046B25 /* Info.plist */,
-			);
-			path = "Weather LoggerUITests";
 			sourceTree = "<group>";
 		};
 		E869C98C2053D83F00046B25 /* Supporting Files */ = {
@@ -648,24 +619,6 @@
 			productReference = E869C9592053CB9200046B25 /* Weather LoggerTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		E869C9632053CB9200046B25 /* Weather LoggerUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = E869C9732053CB9200046B25 /* Build configuration list for PBXNativeTarget "Weather LoggerUITests" */;
-			buildPhases = (
-				E869C9602053CB9200046B25 /* Sources */,
-				E869C9612053CB9200046B25 /* Frameworks */,
-				E869C9622053CB9200046B25 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				E869C9662053CB9200046B25 /* PBXTargetDependency */,
-			);
-			name = "Weather LoggerUITests";
-			productName = "Weather LoggerUITests";
-			productReference = E869C9642053CB9200046B25 /* Weather LoggerUITests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -681,11 +634,6 @@
 						ProvisioningStyle = Automatic;
 					};
 					E869C9582053CB9200046B25 = {
-						CreatedOnToolsVersion = 9.2;
-						ProvisioningStyle = Automatic;
-						TestTargetID = E869C93F2053CB9200046B25;
-					};
-					E869C9632053CB9200046B25 = {
 						CreatedOnToolsVersion = 9.2;
 						ProvisioningStyle = Automatic;
 						TestTargetID = E869C93F2053CB9200046B25;
@@ -707,7 +655,6 @@
 			targets = (
 				E869C93F2053CB9200046B25 /* Weather Logger */,
 				E869C9582053CB9200046B25 /* Weather LoggerTests */,
-				E869C9632053CB9200046B25 /* Weather LoggerUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -724,13 +671,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		E869C9572053CB9200046B25 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		E869C9622053CB9200046B25 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -816,14 +756,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		E869C9602053CB9200046B25 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				E869C9692053CB9200046B25 /* Weather_LoggerUITests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -831,11 +763,6 @@
 			isa = PBXTargetDependency;
 			target = E869C93F2053CB9200046B25 /* Weather Logger */;
 			targetProxy = E869C95A2053CB9200046B25 /* PBXContainerItemProxy */;
-		};
-		E869C9662053CB9200046B25 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = E869C93F2053CB9200046B25 /* Weather Logger */;
-			targetProxy = E869C9652053CB9200046B25 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -1032,38 +959,6 @@
 			};
 			name = Release;
 		};
-		E869C9742053CB9200046B25 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = E3G5K9X7S4;
-				INFOPLIST_FILE = "Weather LoggerUITests/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.Mike.Weather-LoggerUITests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = "Weather Logger";
-			};
-			name = Debug;
-		};
-		E869C9752053CB9200046B25 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = E3G5K9X7S4;
-				INFOPLIST_FILE = "Weather LoggerUITests/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.Mike.Weather-LoggerUITests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = "Weather Logger";
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -1090,15 +985,6 @@
 			buildConfigurations = (
 				E869C9712053CB9200046B25 /* Debug */,
 				E869C9722053CB9200046B25 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		E869C9732053CB9200046B25 /* Build configuration list for PBXNativeTarget "Weather LoggerUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				E869C9742053CB9200046B25 /* Debug */,
-				E869C9752053CB9200046B25 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
